@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রক্তের টান (Rokter Tan) - ডোনার পোর্টাল ও লিডারবোর্ড</title>
+    <!-- টেলউইন্ড সিএসএস (Tailwind CSS) সিডিএন -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ফন্ট অসাম আইকন (Font Awesome) সিডিএন -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- গুগল ফন্টস (Hind Siliguri) - বাংলা টাইপোগ্রাফির জন্য -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* মূল লাইট থিম ও ফন্ট কনফিগারেশন */
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f8fafc; /* অত্যন্ত আরামদায়ক ও অফ-হোয়াইট ব্যাকগ্রাউন্ড */
+            color: #1e293b; /* ডিপ স্লেট টেক্সট কালার */
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* প্রফেশনাল কার্ড ডিজাইন (সাদা থিম) */
+        .professional-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* প্রফেশনাল ইনপুট ডিজাইন */
+        .professional-input {
+            background: #fdfdfd;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            transition: all 0.2s ease-in-out;
+        }
+        .professional-input:focus {
+            background: #ffffff;
+            border-color: #dc2626; /* ব্লাড রেড কালার */
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+            outline: none;
+        }
+
+        /* একটিভ নেভিগেশন স্টাইল */
+        .nav-active {
+            background: #fef2f2;
+            border: 1.5px solid #fee2e2;
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        /* কাস্টম স্ক্রলবার */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="p-3 sm:p-6 md:p-8">
+
+    <!-- কাস্টম টোস্ট নোটিফিকেশন সিস্টেম -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- কাস্টম কনফার্মেশন মোডাল (ডিফল্ট উইন্ডো অ্যালার্ট এর পরিবর্তে) -->
+    <div id="custom-confirm-modal" class="fixed inset-0 bg-black/40 z-[9999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 scale-95 transition-transform duration-300">
+            <h3 class="text-lg font-bold text-slate-800" id="confirm-title">নিশ্চিত করুন</h3>
+            <p class="text-sm text-slate-500 mt-2" id="confirm-message">আপনি কি এই কাজটি করতে চান?</p>
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="confirm-cancel-btn" class="px-4 py-2 text-xs font-semibold text-slate-500 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">বাতিল</button>
+                <button id="confirm-ok-btn" class="px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors">হ্যাঁ, নিশ্চিত</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- সিমলেস রিডাইরেকশন স্ক্রিন (যখন কোনো ইউজার রেফারেল লিংকে ক্লিক করে আসবে) -->
+    <div id="redirection-screen" class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center p-4 hidden">
+        <div class="text-center space-y-4">
+            <div class="relative w-16 h-16 mx-auto">
+                <div class="absolute inset-0 rounded-full border-4 border-slate-100"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-red-600 border-t-transparent animate-spin"></div>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">রক্তের টান নেটওয়ার্কে আপনাকে স্বাগতম</h3>
+            <p class="text-xs sm:text-sm text-slate-500 max-w-xs mx-auto">
+                আপনার ভিজিটটি সফলভাবে ডোনার অ্যাকাউন্টে যুক্ত করা হচ্ছে... মূল ওয়েবসাইটে রিডাইরেক্ট করা হচ্ছে।
+            </p>
+        </div>
+    </div>
+
+    <!-- মূল অ্যাপ্লিকেশন কন্টেইনার -->
+    <div id="main-container" class="max-w-4xl mx-auto mb-24">
+        
+        <!-- টপ হেডার সেকশন -->
+        <header class="text-center my-6 md:my-12">
+            <div class="inline-block p-4 rounded-full bg-red-50 border border-red-100 mb-3">
+                <i class="fa-solid fa-droplet text-red-600 text-4xl md:text-5xl"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+                রক্তের টান <span class="text-red-600">পোর্টাল</span>
+            </h1>
+            <p class="text-slate-500 text-xs sm:text-sm md:text-base mt-2 font-medium">
+                জরুরি রক্তদান ড্যাশবোর্ড, ওটিপি লগইন ও লাইভ রেফারেল লিডারবোর্ড
+            </p>
+        </header>
+
+        <!-- নেভিগেশন বার (সাদা প্রফেশনাল থিম) -->
+        <nav class="professional-card rounded-2xl p-1.5 flex justify-between gap-1 mb-8 sticky top-4 z-50">
+            <button id="nav-leaderboard" onclick="switchPage('leaderboard')" class="flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 nav-active">
+                <i class="fa-solid fa-trophy text-amber-500"></i>
+                <span>লিডারবোর্ড</span>
+            </button>
+            <button id="nav-share" onclick="switchPage('share')" class="flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-slate-500 hover:text-slate-800">
+                <i class="fa-solid fa-share-nodes text-blue-500"></i>
+                <span>শেয়ার প্যানেল</span>
+            </button>
+            <button id="nav-auth" onclick="switchPage('auth')" class="flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-slate-500 hover:text-slate-800">
+                <i class="fa-solid fa-user-lock text-red-500"></i>
+                <span id="auth-nav-text">ডোনার লগইন</span>
+            </button>
+        </nav>
+
+        <!-- ডাইনামিক পেজ সেকশন সমূহ -->
+        <main>
+            
+            <!-- ১. লিডারবোর্ড পেজ (সবার জন্য উন্মুক্ত) -->
+            <section id="page-leaderboard" class="space-y-6">
+                
+                <!-- পোডিয়াম ভিউ (শীর্ষ ৩ জন ডোনারের জন্য বিশেষ গ্লোয়িং ডিসপ্লে) -->
+                <div id="leaderboard-podium" class="grid grid-cols-3 gap-2 sm:gap-6 items-end pt-8 pb-4">
+                    <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে ডাইনামিকালি পোডিয়াম তৈরি হবে -->
+                </div>
+
+                <!-- মূল লিডারবোর্ড তালিকা -->
+                <div class="professional-card rounded-2xl p-4 md:p-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-list-ol text-red-600"></i> ভেরিফাইড ডোনার তালিকা
+                            </h2>
+                            <p class="text-xs text-slate-400 mt-1">সক্রিয়ভাবে রক্তদান ও প্ল্যাটফর্ম শেয়ার করা বীর যোদ্ধারা</p>
+                        </div>
+                        <span id="sorting-status" class="text-xs bg-slate-50 text-slate-600 py-1.5 px-3 rounded-full border border-slate-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-spinner fa-spin mr-1"></i> লোড হচ্ছে...
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-100 text-slate-500 text-xs sm:text-sm font-semibold">
+                                    <th class="pb-4 text-center w-14">স্থান</th>
+                                    <th class="pb-4 pl-4">ডোনারের নাম</th>
+                                    <th class="pb-4 text-center">রক্তের গ্রুপ</th>
+                                    <th class="pb-4 text-center">মোট শেয়ার</th>
+                                    <th class="pb-4 text-center">পয়েন্ট (ভিজিট)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-rows" class="divide-y divide-slate-100 text-xs sm:text-sm md:text-base">
+                                <tr>
+                                    <td colspan="5" class="py-12 text-center text-slate-400">
+                                        <i class="fa-solid fa-rotate text-red-600 animate-spin text-2xl mb-2 block"></i>
+                                        ডেটাবেজ থেকে লাইভ তথ্য নিয়ে আসা হচ্ছে...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ২. অথেন্টিকেশন পেজ (লগইন, ওটিপি সেন্ড, পাসওয়ার্ড সেট/রিসেট) -->
+            <section id="page-auth" class="hidden max-w-md mx-auto">
+                
+                <!-- ধাপ ক: রেগুলার লগইন ফর্ম -->
+                <div id="auth-login-card" class="professional-card rounded-3xl p-6 sm:p-8 space-y-6">
+                    <div class="text-center">
+                        <h2 class="text-2xl font-black text-slate-800">ডোনার লগইন</h2>
+                        <p class="text-slate-500 text-xs mt-1.5">নিবন্ধিত মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে প্রবেশ করুন</p>
+                    </div>
+
+                    <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm text-slate-600 mb-1.5 font-medium">মোবাইল নম্বর</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 text-xs sm:text-sm font-bold">+88</span>
+                                <input type="tel" id="login-phone" required placeholder="01XXXXXXXXX" class="w-full pl-14 pr-4 py-3 rounded-xl professional-input text-sm sm:text-base">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label class="block text-xs sm:text-sm text-slate-600 font-medium">পাসওয়ার্ড</label>
+                                <button type="button" onclick="showForgotPassword()" class="text-xs text-red-600 hover:underline font-semibold">পাসওয়ার্ড ভুলে গেছেন?</button>
+                            </div>
+                            <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl professional-input text-sm sm:text-base">
+                        </div>
+
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span>লগইন করুন</span>
+                        </button>
+                    </form>
+
+                    <div class="relative flex py-2 items-center">
+                        <div class="flex-grow border-t border-slate-200"></div>
+                        <span class="flex-shrink mx-4 text-slate-400 text-xs uppercase font-semibold tracking-wider">নতুন অথবা প্রথমবার?</span>
+                        <div class="flex-grow border-t border-slate-200"></div>
+                    </div>
+
+                    <button onclick="showOtpRequest('setup')" class="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold py-3 rounded-xl transition-all border border-slate-200 flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-600 text-lg"></i>
+                        <span>প্রথমবার পাসওয়ার্ড সেট করুন</span>
+                    </button>
+                </div>
+
+                <!-- ধাপ খ: হোয়াটসঅ্যাপ ওটিপি রিকোয়েস্ট ফর্ম -->
+                <div id="auth-otp-request-card" class="professional-card rounded-3xl p-6 sm:p-8 space-y-6 hidden">
+                    <div class="flex items-center gap-3">
+                        <button onclick="cancelToLogin()" class="text-slate-400 hover:text-slate-800 p-1 text-lg transition-colors">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                        </button>
+                        <h2 id="otp-request-title" class="text-xl font-black text-slate-800">হোয়াটসঅ্যাপ ভেরিফিকেশন</h2>
+                    </div>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        আপনার অ্যাকাউন্টের মালিকানা যাচাই করতে হোয়াটসঅ্যাপে ৬ সংখ্যার একটি ওটিপি (OTP) কোড পাঠানো হবে।
+                    </p>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm text-slate-600 mb-1.5 font-medium">মোবাইল নম্বর</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 text-xs sm:text-sm font-bold">+88</span>
+                                <input type="tel" id="otp-phone" placeholder="01XXXXXXXXX" class="w-full pl-14 pr-4 py-3 rounded-xl professional-input text-sm sm:text-base">
+                            </div>
+                        </div>
+
+                        <button id="btn-send-otp" onclick="sendWhatsAppOtp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span id="btn-send-otp-text">হোয়াটসঅ্যাপে কোড পাঠান</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ধাপ গ: ওটিপি ভেরিফাই ও নতুন পাসওয়ার্ড সেটআপ ফর্ম -->
+                <div id="auth-otp-verify-card" class="professional-card rounded-3xl p-6 sm:p-8 space-y-6 hidden">
+                    <div class="text-center">
+                        <div class="inline-block p-3.5 rounded-full bg-emerald-50 border border-emerald-100 mb-3">
+                            <i class="fa-solid fa-shield-halved text-emerald-600 text-3xl"></i>
+                        </div>
+                        <h2 class="text-xl font-black text-slate-800">কোড যাচাই ও পাসওয়ার্ড সেট করুন</h2>
+                        <p class="text-slate-500 text-xs mt-1.5">
+                            <span id="display-target-phone" class="text-emerald-600 font-bold"></span> নম্বরে পাঠানো ৬ সংখ্যার কোডটি দিন।
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm text-slate-600 mb-1.5 font-medium text-center">৬-সংখ্যার ওটিপি কোড</label>
+                            <input type="text" id="verify-otp-code" maxlength="6" placeholder="000000" class="w-full px-4 py-3 rounded-xl professional-input text-center font-mono text-xl sm:text-2xl tracking-widest font-black">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs sm:text-sm text-slate-600 mb-1.5 font-medium">নতুন পাসওয়ার্ড তৈরি করুন</label>
+                            <input type="password" id="verify-new-password" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" class="w-full px-4 py-3 rounded-xl professional-input text-sm sm:text-base">
+                        </div>
+
+                        <button onclick="verifyOtpAndSetPassword()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow-md">
+                            কোড যাচাই করে পাসওয়ার্ড সেভ করুন
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ৩. শেয়ার ও পারসোনাল ড্যাশবোর্ড পেজ (শুধুমাত্র ভেরিফাইড লগইনড ডোনারদের জন্য) -->
+            <section id="page-share" class="hidden space-y-6">
+                
+                <!-- লগইন ছাড়া অ্যাক্সেস ব্লক করার কার্ড -->
+                <div id="share-unauthorized" class="professional-card rounded-3xl p-8 text-center space-y-5 max-w-md mx-auto">
+                    <div class="w-20 h-20 bg-red-50 border border-red-100 rounded-full flex items-center justify-center mx-auto text-red-600 text-3xl">
+                        <i class="fa-solid fa-shield-cat"></i>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-800">অ্যাক্সেস ব্লকড!</h2>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        দুঃখিত, এই পেজটি শুধুমাত্র আমাদের ভেরিফাইড রক্তের টান ডোনারদের জন্য সুরক্ষিত। শেয়ার করার পয়েন্টগুলো ট্র্যাক করতে দয়া করে আগে লগইন করুন।
+                    </p>
+                    <button onclick="switchPage('auth')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md text-sm">
+                        লগইন পেজে যান
+                    </button>
+                </div>
+
+                <!-- মূল ড্যাশবোর্ড ভিউ -->
+                <div id="share-dashboard" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        
+                        <!-- ডোনার প্রোফাইল মিনি উইজেট -->
+                        <div class="professional-card rounded-2xl p-6 flex flex-col items-center justify-center text-center space-y-4 relative overflow-hidden border-t-4 border-t-red-600">
+                            <div class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                                <i class="fa-solid fa-certificate"></i> ভেরিফাইড
+                            </div>
+                            <div class="w-20 h-20 bg-gradient-to-tr from-red-600 to-rose-500 rounded-full flex items-center justify-center text-white text-3xl font-black shadow-md uppercase" id="donor-avatar">
+                                O
+                            </div>
+                            <div>
+                                <h3 id="donor-profile-name" class="text-xl font-bold text-slate-800">লোডিং...</h3>
+                                <p id="donor-profile-phone" class="text-slate-500 text-xs font-mono mt-0.5"></p>
+                            </div>
+                            <div class="inline-flex items-center gap-1.5 bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-full border border-red-100">
+                                <i class="fa-solid fa-droplet"></i> গ্রুপ: <span id="donor-profile-blood">O+</span>
+                            </div>
+                        </div>
+
+                        <!-- রিয়েল-টাইম শেয়ার ও পয়েন্ট স্ট্যাটাস ট্র্যাকার -->
+                        <div class="md:col-span-2 grid grid-cols-2 gap-4">
+                            <div class="professional-card rounded-2xl p-6 flex flex-col justify-between">
+                                <div class="flex justify-between items-start">
+                                    <span class="text-slate-500 text-xs sm:text-sm font-semibold">আপনার মোট শেয়ার</span>
+                                    <div class="p-2 bg-blue-50 rounded-xl text-blue-600 text-sm border border-blue-100"><i class="fa-solid fa-share-nodes"></i></div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4 id="donor-stat-shares" class="text-3xl sm:text-4xl font-black tracking-tight text-slate-800">০</h4>
+                                    <p class="text-slate-400 text-[10px] sm:text-xs mt-1">লগইন ও সোশ্যাল শেয়ারের মোট সংখ্যা</p>
+                                </div>
+                            </div>
+
+                            <div class="professional-card rounded-2xl p-6 flex flex-col justify-between">
+                                <div class="flex justify-between items-start">
+                                    <span class="text-slate-500 text-xs sm:text-sm font-semibold">অর্জিত পয়েন্ট (ইউনিক ভিজিট)</span>
+                                    <div class="p-2 bg-amber-50 rounded-xl text-amber-600 text-sm border border-amber-100"><i class="fa-solid fa-star"></i></div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4 id="donor-stat-points" class="text-3xl sm:text-4xl font-black tracking-tight text-amber-600">০</h4>
+                                    <p class="text-slate-400 text-[10px] sm:text-xs mt-1">আপনার লিঙ্ক থেকে ওয়েবসাইটে আসা মানুষ</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- রেফ লিঙ্ক জেনারেটর কার্ড -->
+                    <div class="professional-card rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-yellow-500"></i>
+                            <h3 class="text-lg font-bold text-slate-800">আপনার ইউনিক শেয়ার লিঙ্ক</h3>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+                            নিচের লিঙ্কটি কপি করে আপনার বন্ধুবান্ধব ও সামাজিক মাধ্যমে ছড়িয়ে দিন। আপনার রেফার করা লিঙ্ক দিয়ে যতজন মানুষ মূল সাইট ভিজিট করবে, আপনার পয়েন্ট স্বয়ংক্রিয়ভাবে বাড়তে থাকবে এবং আপনি লিডারবোর্ডের শীর্ষে উঠে যাবেন!
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                            <input type="text" id="share-link-input" readonly class="flex-1 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 font-mono text-xs sm:text-sm focus:outline-none" value="">
+                            <button onclick="copyShareLink()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95 text-sm">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>কপি লিঙ্ক</span>
+                            </button>
+                        </div>
+
+                        <!-- ওয়ান-ক্লিক সোশ্যাল শেয়ার বাটনসমূহ -->
+                        <div class="flex flex-wrap gap-2 pt-3">
+                            <a id="share-whatsapp" target="_blank" class="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100/50 border border-emerald-200 text-emerald-600 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
+                                <i class="fa-brands fa-whatsapp text-sm sm:text-base"></i> হোয়াটসঅ্যাপে শেয়ার করুন
+                            </a>
+                            <a id="share-facebook" target="_blank" class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100/50 border border-blue-200 text-blue-600 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
+                                <i class="fa-brands fa-facebook text-sm sm:text-base"></i> ফেসবুকে পোস্ট করুন
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- লগআউট অপশন -->
+                    <div class="text-right">
+                        <button onclick="handleLogout()" class="text-slate-400 hover:text-red-600 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-red-50/50 border border-transparent hover:border-slate-200">
+                            <i class="fa-solid fa-power-off"></i> ড্যাশবোর্ড থেকে লগআউট
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ফায়ারবেস এসডিকে লোড ও অ্যাপ্লিকেশন বিজনেস লজিক -->
+    <script type="module">
+        // ফায়ারবেস মডিউলার এসডিকে সরাসরি সিডিএন থেকে ইম্পোর্ট করা হচ্ছে
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getFirestore, doc, collection, getDocs, getDoc, updateDoc, query, where, runTransaction 
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // ওমর, তোমার সরবরাহকৃত ফায়ারবেস কনফিগারেশন প্যারামিটারসমূহ
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUlcAtzmJLwZmCCdliL3n9oePKXrUZodc",
+            authDomain: "roktolagbebd.firebaseapp.com",
+            projectId: "roktolagbebd",
+            storageBucket: "roktolagbebd.firebasestorage.app",
+            messagingSenderId: "612218868571",
+            appId: "1:612218868571:web:b369863ac82d4d0ad9407e",
+            measurementId: "G-W543L13Z7Y"
+        };
+
+        // ফায়ারবেস এবং ডাটাবেজ সার্ভিস স্টার্ট করা হচ্ছে
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // হোয়াটসঅ্যাপ ওটিপি এপিআই কনফিগারেশন এবং প্রধান সাইটের লিঙ্ক
+        const WHATSAPP_API_BASE = "https://otp-api-hmrz.onrender.com";
+        const MAIN_WEBSITE_URL = "https://emergencyroktolagbe.vercel.app";
+        
+        // গ্লোবাল ভ্যারিয়েবল এবং রানটাইম সেশন ম্যানেজমেন্ট স্টেট
+        let currentDonor = null; 
+        let otpSession = {
+            code: null,
+            phone: null,
+            mode: 'setup' // 'setup' অথবা 'forgot' হতে পারে
+        };
+        let globalDonorsList = [];
+        let systemActive = false; // লিডারবোর্ডের সর্টিং মোড ট্র্যাক করার জন্য
+
+        // গ্লোবাল ভিউ কন্ট্রোলারগুলোকে ব্রাউজার উইন্ডো স্কোপে বাইন্ড করা হচ্ছে
+        window.switchPage = switchPage;
+        window.handleLogin = handleLogin;
+        window.showOtpRequest = showOtpRequest;
+        window.cancelToLogin = cancelToLogin;
+        window.showForgotPassword = showForgotPassword;
+        window.sendWhatsAppOtp = sendWhatsAppOtp;
+        window.verifyOtpAndSetPassword = verifyOtpAndSetPassword;
+        window.copyShareLink = copyShareLink;
+        window.handleLogout = handleLogout;
+
+        // পেজ লোড হওয়ার সাথে সাথে প্রথমিক অপারেশনসমূহ রান করা হচ্ছে
+        window.addEventListener('DOMContentLoaded', async () => {
+            // ১. ইনকামিং রেফারেল লিঙ্ক ভিজিট চেক ও ট্র্যাকিং প্রসেসিং
+            await processIncomingReferral();
+            
+            // ২. লোকাল ক্যাশ থেকে আগের লগইন সেশন পুনরুদ্ধার করা
+            checkActiveSession();
+
+            // ৩. প্রথমিক ডাটা দিয়ে লিডারবোর্ড সাজানো
+            await loadLeaderboard();
+        });
+
+        // কাস্টম নোটিফিকেশন সিস্টেম (টোস্ট অ্যালার্ট)
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let icon = '<i class="fa-solid fa-circle-info text-blue-500"></i>';
+            if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+            if (type === 'error') icon = '<i class="fa-solid fa-triangle-exclamation text-rose-500"></i>';
+            
+            toast.className = "bg-white border border-slate-100 p-4 rounded-xl flex items-center gap-3 shadow-xl transition-all duration-300 transform translate-x-12 opacity-0 pointer-events-auto border-l-4 " + 
+                (type === 'success' ? 'border-l-emerald-500' : type === 'error' ? 'border-l-rose-500' : 'border-l-blue-500');
+            
+            toast.innerHTML = `
+                <div class="text-lg">${icon}</div>
+                <div class="text-xs sm:text-sm font-bold text-slate-700">${message}</div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // স্লাইড ইন এনিমেশন
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, 10);
+            
+            // ৪ সেকেন্ড পর অটো ডিলিট
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        // কাস্টম কনফার্মেশন মোডাল উইন্ডো
+        function showCustomConfirm(message, title = "নিশ্চিত করুন") {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('custom-confirm-modal');
+                const titleEl = document.getElementById('confirm-title');
+                const msgEl = document.getElementById('confirm-message');
+                const cancelBtn = document.getElementById('confirm-cancel-btn');
+                const okBtn = document.getElementById('confirm-ok-btn');
+
+                titleEl.innerText = title;
+                msgEl.innerText = message;
+                modal.classList.remove('hidden');
+
+                const cleanUp = (result) => {
+                    modal.classList.add('hidden');
+                    cancelBtn.removeEventListener('click', onCancel);
+                    okBtn.removeEventListener('click', onOk);
+                    resolve(result);
+                };
+
+                const onCancel = () => cleanUp(false);
+                const onOk = () => cleanUp(true);
+
+                cancelBtn.addEventListener('click', onCancel);
+                okBtn.addEventListener('click', onOk);
+            });
+        }
+
+        // ইনকামিং রেফারেল ট্র্যাকিং মেকানিজম (রিয়েল-টাইম পয়েন্ট ট্র্যাকার + সিমলেস রিডাইরেকশন)
+        async function processIncomingReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refId = urlParams.get('ref');
+            
+            if (refId) {
+                // রিডাইরেক্টিং ব্লকিং স্ক্রিন ওপেন করা
+                const redirectScreen = document.getElementById('redirection-screen');
+                const mainAppContainer = document.getElementById('main-container');
+                
+                redirectScreen.classList.remove('hidden');
+                mainAppContainer.classList.add('hidden');
+
+                // একই সেশনে ডাবল রেফারেল স্প্যাম বা ফেক পয়েন্ট বাড়ানো ঠেকাতে সেভ গার্ড
+                const hasVisited = localStorage.getItem(`visited_ref_${refId}`);
+                if (!hasVisited) {
+                    try {
+                        const donorRef = doc(db, "donors", refId);
+                        
+                        // ফায়ারস্টোর ট্র্যানজ্যাকশনের মাধ্যমে ডাটাবেজ আপডেট নিশ্চিত করা
+                        await runTransaction(db, async (transaction) => {
+                            const sfDoc = await transaction.get(donorRef);
+                            if (sfDoc.exists() && sfDoc.data().isVerified === true) {
+                                const currentPoints = sfDoc.data().points || 0;
+                                transaction.update(donorRef, { points: currentPoints + 1 });
+                            }
+                        });
+                        
+                        // লোকাল স্টোরেজে লক করা যাতে বারবার রিফ্রেশে পয়েন্ট না বাড়ে
+                        localStorage.setItem(`visited_ref_${refId}`, "true");
+                    } catch (e) {
+                        console.error("রেফারেল ট্র্যাকিংয়ে সমস্যা হয়েছে:", e);
+                    }
+                }
+
+                // সফলভাবে ট্র্যাকিং শেষে প্রধান রক্তদান ওয়েবসাইটে পাঠিয়ে দেওয়া হচ্ছে
+                setTimeout(() => {
+                    window.location.href = MAIN_WEBSITE_URL;
+                }, 1500); // ১.৫ সেকেন্ডের ডিলিশাস ট্রানজিশন হোল্ড
+            }
+        }
+
+        // সিঙ্গেল পেজ অ্যাপ্লিকেশন (SPA) রাউটিং কন্ট্রোলার
+        function switchPage(pageId) {
+            // নেভিগেশন ট্যাব সমূহের ভিজ্যুয়াল ডিজাইন একটিভ-ইনএকটিভ টগল
+            document.getElementById('nav-leaderboard').className = "flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 " + (pageId === 'leaderboard' ? 'nav-active' : 'text-slate-500 hover:text-slate-800');
+            document.getElementById('nav-share').className = "flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 " + (pageId === 'share' ? 'nav-active' : 'text-slate-500 hover:text-slate-800');
+            document.getElementById('nav-auth').className = "flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 " + (pageId === 'auth' ? 'nav-active' : 'text-slate-500 hover:text-slate-800');
+
+            // সব পেজ লুকাতে হবে প্রথমে
+            document.getElementById('page-leaderboard').classList.add('hidden');
+            document.getElementById('page-auth').classList.add('hidden');
+            document.getElementById('page-share').classList.add('hidden');
+
+            // কাঙ্ক্ষিত পেজটি রেন্ডার করা
+            if(pageId === 'leaderboard') {
+                document.getElementById('page-leaderboard').classList.remove('hidden');
+                loadLeaderboard(); 
+            } else if (pageId === 'auth') {
+                document.getElementById('page-auth').classList.remove('hidden');
+            } else if (pageId === 'share') {
+                document.getElementById('page-share').classList.remove('hidden');
+                renderSharePanel();
+            }
+        }
+
+        // সেশন রিকভারি চেকার
+        function checkActiveSession() {
+            const savedDonor = localStorage.getItem('active_donor_session');
+            if (savedDonor) {
+                currentDonor = JSON.parse(savedDonor);
+                document.getElementById('auth-nav-text').innerText = "ড্যাশবোর্ড";
+            } else {
+                currentDonor = null;
+                document.getElementById('auth-nav-text').innerText = "ডোনার লগইন";
+            }
+        }
+
+        // ডাইনামিক রিয়েল-টাইম লিডারবোর্ড রেন্ডার ইঞ্জিন (হোয়াইট প্রফেশনাল থিম)
+        async function loadLeaderboard() {
+            const containerRows = document.getElementById('leaderboard-rows');
+            const podiumGrid = document.getElementById('leaderboard-podium');
+            
+            try {
+                const donorsCol = collection(db, "donors");
+                const q = query(donorsCol, where("isVerified", "==", true));
+                const snapshot = await getDocs(q);
+                
+                let donors = [];
+                snapshot.forEach(doc => {
+                    donors.push({ id: doc.id, ...doc.data() });
+                });
+
+                systemActive = donors.some(d => (d.points && d.points > 0) || (d.shares && d.shares > 0));
+                
+                if (systemActive) {
+                    donors.sort((a, b) => (b.points || 0) - (a.points || 0));
+                    document.getElementById('sorting-status').innerHTML = '<span class="flex items-center gap-1 text-amber-600 font-bold"><i class="fa-solid fa-bolt text-xs"></i> রিয়েল-টাইম পয়েন্ট সর্টিং</span>';
+                } else {
+                    donors.sort((a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'bn'));
+                    document.getElementById('sorting-status').innerHTML = '<span class="flex items-center gap-1 text-sky-600 font-bold"><i class="fa-solid fa-arrow-down-a-z text-xs"></i> নাম অনুসারে ক্রমান্বয়ে</span>';
+                }
+
+                globalDonorsList = donors;
+
+                podiumGrid.innerHTML = "";
+                let podiumData = { first: null, second: null, third: null };
+                
+                if (donors.length > 0) podiumData.first = donors[0];
+                if (donors.length > 1) podiumData.second = donors[1];
+                if (donors.length > 2) podiumData.third = donors[2];
+
+                if(donors.length > 0) {
+                    podiumGrid.innerHTML = `
+                        <!-- ২য় স্থান অধিকারী -->
+                        <div class="flex flex-col items-center">
+                            ${podiumData.second ? `
+                                <div class="w-12 h-12 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-700 text-base font-bold shadow-sm uppercase mb-1.5">${podiumData.second.name ? podiumData.second.name.charAt(0) : 'D'}</div>
+                                <div class="text-center max-w-full truncate text-[11px] sm:text-xs text-slate-600 font-medium px-1">${podiumData.second.name || 'ডোনার'}</div>
+                                <div class="text-[9px] sm:text-xs text-amber-600 font-bold mb-2">${podiumData.second.points || 0} Pts</div>
+                            ` : '<div class="h-10"></div>'}
+                            <div class="w-full bg-gradient-to-t from-slate-100 to-white rounded-t-2xl h-16 sm:h-20 flex items-center justify-center border-t border-x border-slate-200 shadow-sm">
+                                <span class="text-slate-500 font-bold text-lg sm:text-xl">২</span>
+                            </div>
+                        </div>
+
+                        <!-- ১ম স্থান চ্যাম্পিয়ন -->
+                        <div class="flex flex-col items-center">
+                            <i class="fa-solid fa-crown text-amber-500 text-lg mb-1"></i>
+                            <div class="w-16 h-16 bg-gradient-to-tr from-amber-500 to-yellow-400 border border-amber-300 rounded-full flex items-center justify-center text-white text-xl font-black shadow-md uppercase mb-1.5">${podiumData.first.name ? podiumData.first.name.charAt(0) : 'C'}</div>
+                            <div class="text-center max-w-full truncate text-xs sm:text-sm text-slate-800 font-extrabold px-1">${podiumData.first.name || 'চ্যাম্পিয়ন'}</div>
+                            <div class="text-[10px] sm:text-xs text-yellow-600 font-black mb-2">${podiumData.first.points || 0} Pts</div>
+                            <div class="w-full bg-gradient-to-t from-amber-50 to-white rounded-t-2xl h-24 sm:h-28 flex items-center justify-center border-t border-x border-amber-200 shadow-md">
+                                <span class="text-amber-500 font-black text-2xl sm:text-3xl">১</span>
+                            </div>
+                        </div>
+
+                        <!-- ৩য় স্থান অধিকারী -->
+                        <div class="flex flex-col items-center">
+                            ${podiumData.third ? `
+                                <div class="w-11 h-11 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-500 text-sm font-bold shadow-sm mb-1.5">${podiumData.third.name ? podiumData.third.name.charAt(0) : 'D'}</div>
+                                <div class="text-center max-w-full truncate text-[11px] sm:text-xs text-slate-600 font-medium px-1">${podiumData.third.name || 'ডোনার'}</div>
+                                <div class="text-[9px] sm:text-xs text-amber-700 font-bold mb-2">${podiumData.third.points || 0} Pts</div>
+                            ` : '<div class="h-10"></div>'}
+                            <div class="w-full bg-gradient-to-t from-slate-100 to-white rounded-t-2xl h-12 sm:h-16 flex items-center justify-center border-t border-x border-slate-200 shadow-sm">
+                                <span class="text-slate-400 font-bold text-sm sm:text-base">৩</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                containerRows.innerHTML = "";
+                if (donors.length === 0) {
+                    containerRows.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400">কোন ভেরিফাইড ডোনারের ডাটা খুঁজে পাওয়া যায়নি।</td></tr>`;
+                    return;
+                }
+
+                donors.forEach((donor, index) => {
+                    let positionBadge = "";
+                    if (index === 0) positionBadge = `<span class="bg-amber-100 text-amber-700 py-1 px-2.5 rounded-lg text-xs font-bold border border-amber-200">১</span>`;
+                    else if (index === 1) positionBadge = `<span class="bg-slate-100 text-slate-600 py-1 px-2.5 rounded-lg text-xs font-bold border border-slate-200">২</span>`;
+                    else if (index === 2) positionBadge = `<span class="bg-orange-50 text-orange-700 py-1 px-2.5 rounded-lg text-xs font-bold border border-orange-100">৩</span>`;
+                    else positionBadge = `<span class="text-slate-400 text-sm font-mono font-bold">${index + 1}</span>`;
+
+                    const rowHtml = `
+                        <tr class="hover:bg-slate-50/50 transition-colors duration-200">
+                            <td class="py-4 text-center">${positionBadge}</td>
+                            <td class="py-4 pl-4 font-bold text-slate-800 flex items-center gap-2">
+                                <span>${donor.name || 'নামহীন ডোনার'}</span>
+                                ${donor.isVerified ? '<i class="fa-solid fa-circle-check text-emerald-500 text-xs" title="ভেরিফাইড ডোনার"></i>' : ''}
+                            </td>
+                            <td class="py-4 text-center">
+                                <span class="bg-red-50 border border-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-black">
+                                    ${donor.bloodGroup || 'অজানা'}
+                                </span>
+                            </td>
+                            <td class="py-4 text-center font-mono text-slate-500 font-medium">${donor.shares || 0}</td>
+                            <td class="py-4 text-center font-mono font-bold text-amber-600">${donor.points || 0}</td>
+                        </tr>
+                    `;
+                    containerRows.innerHTML += rowHtml;
+                });
+
+            } catch (err) {
+                console.error("Firestore থেকে ডাটা লোড করতে ত্রুটি:", err);
+                containerRows.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-rose-500"><i class="fa-solid fa-triangle-exclamation mr-1"></i> লাইভ ডাটাবেজ তথ্য লোড করা সম্ভব হয়নি। রুলস চেক করুন।</td></tr>`;
+            }
+        }
+
+        // পারসোনাল শেয়ার ড্যাশবোর্ড কন্ট্রোলার
+        async function renderSharePanel() {
+            const unauthorizedCard = document.getElementById('share-unauthorized');
+            const dashboardCard = document.getElementById('share-dashboard');
+
+            if (!currentDonor) {
+                unauthorizedCard.classList.remove('hidden');
+                dashboardCard.classList.add('hidden');
+            } else {
+                unauthorizedCard.classList.add('hidden');
+                dashboardCard.classList.remove('hidden');
+
+                try {
+                    const freshDocRef = doc(db, "donors", currentDonor.id);
+                    const freshDocSnap = await getDoc(freshDocRef);
+                    if (freshDocSnap.exists()) {
+                        const updatedData = freshDocSnap.data();
+                        currentDonor = { id: currentDonor.id, ...updatedData };
+                        localStorage.setItem('active_donor_session', JSON.stringify(currentDonor));
+                    }
+                } catch (e) {
+                    console.error("রিয়েল-টাইম ডাটা আপডেট ফেইলড:", e);
+                }
+
+                document.getElementById('donor-profile-name').innerText = currentDonor.name || 'ডোনার';
+                document.getElementById('donor-profile-phone').innerText = "+88 " + currentDonor.id;
+                document.getElementById('donor-profile-blood').innerText = currentDonor.bloodGroup || 'N/A';
+                document.getElementById('donor-avatar').innerText = currentDonor.name ? currentDonor.name.charAt(0) : 'O';
+                document.getElementById('donor-stat-shares').innerText = currentDonor.shares || 0;
+                document.getElementById('donor-stat-points').innerText = currentDonor.points || 0;
+
+                // পোর্টাল ট্র্যাকার লিঙ্ক তৈরি
+                const referralUrl = `${window.location.origin}${window.location.pathname}?ref=${currentDonor.id}`;
+                document.getElementById('share-link-input').value = referralUrl;
+
+                const shareText = encodeURIComponent(`রক্তের টান (Rokter Tan) প্ল্যাটফর্মে আমার ডোনার ভেরিফিকেশন প্রোফাইল দেখুন! জরুরি রক্তের প্রয়োজনে যুক্ত হোন আমাদের সাথে। লিংকে ক্লিক করুন: `);
+                document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}${encodeURIComponent(referralUrl)}`;
+                document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralUrl)}`;
+            }
+        }
+
+        // পাসওয়ার্ড লগইন প্রসেসর
+        async function handleLogin(e) {
+            e.preventDefault();
+            let rawPhone = document.getElementById('login-phone').value.trim();
+            const passwordInput = document.getElementById('login-password').value;
+
+            if(rawPhone.startsWith('+88')) rawPhone = rawPhone.replace('+88', '');
+            if(rawPhone.startsWith('88')) rawPhone = rawPhone.substring(2);
+            
+            if(!rawPhone || !passwordInput) {
+                showToast("মোবাইল নম্বর এবং পাসওয়ার্ড সঠিক নিয়মে পূরণ করুন।", "error");
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "donors", rawPhone);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    showToast("দুঃখিত, এই নম্বরটি আমাদের সিস্টেমে ডোনার হিসেবে নিবন্ধিত বা ভেরিফাইড নেই।", "error");
+                    return;
+                }
+
+                const donorData = docSnap.data();
+                if (donorData.isVerified !== true) {
+                    showToast("আপনার ডোনার প্রোফাইলটি এখনও ভেরিফাই করা হয়নি। রক্তদানের জন্য অ্যাডমিনের সাথে যোগাযোগ করুন।", "error");
+                    return;
+                }
+
+                if (!donorData.password) {
+                    showToast("আপনার অ্যাকাউন্টে এখনও পাসওয়ার্ড সেট করা হয়নি। নিচে 'প্রথমবার পাসওয়ার্ড সেট করুন' অপশনে যান।", "error");
+                    return;
+                }
+
+                if (donorData.password === passwordInput) {
+                    const loggedDonor = { id: rawPhone, ...donorData };
+                    localStorage.setItem('active_donor_session', JSON.stringify(loggedDonor));
+                    
+                    const currentShares = donorData.shares || 0;
+                    await updateDoc(docRef, { shares: currentShares + 1 });
+                    loggedDonor.shares = currentShares + 1;
+                    localStorage.setItem('active_donor_session', JSON.stringify(loggedDonor));
+
+                    checkActiveSession();
+                    showToast("সাফল্যের সাথে লগইন সম্পন্ন হয়েছে!", "success");
+                    switchPage('share');
+                } else {
+                    showToast("ভুল পাসওয়ার্ড! অনুগ্রহ করে সঠিক পাসওয়ার্ড দিয়ে পুনরায় চেষ্টা করুন।", "error");
+                }
+
+            } catch (err) {
+                console.error("লগইন প্রসেসে কারিগরি জটিলতা:", err);
+                showToast("সার্ভার বা ডেটাবেজে সংযোগ করা সম্ভব হচ্ছে না।", "error");
+            }
+        }
+
+        // ওটিপি উইন্ডো টগল উইজেট
+        function showOtpRequest(mode) {
+            otpSession.mode = mode;
+            document.getElementById('otp-request-title').innerText = mode === 'forgot' ? 'পাসওয়ার্ড পরিবর্তন/রিসেট' : 'প্রথমবার পাসওয়ার্ড সেট করুন';
+            document.getElementById('btn-send-otp-text').innerText = mode === 'forgot' ? 'রিসেট কোড পাঠান' : 'হোয়াটসঅ্যাপে কোড পাঠান';
+            
+            document.getElementById('auth-login-card').classList.add('hidden');
+            document.getElementById('auth-otp-request-card').classList.remove('hidden');
+        }
+
+        function cancelToLogin() {
+            document.getElementById('auth-otp-request-card').classList.add('hidden');
+            document.getElementById('auth-otp-verify-card').classList.add('hidden');
+            document.getElementById('auth-login-card').classList.remove('hidden');
+        }
+
+        function showForgotPassword() {
+            showOtpRequest('forgot');
+        }
+
+        // হোয়াটসঅ্যাপ ভেরিফিকেশন কোড (OTP) রিকোয়েস্ট ডেসপ্যাচার
+        async function sendWhatsAppOtp() {
+            let rawPhone = document.getElementById('otp-phone').value.trim();
+            if(rawPhone.startsWith('+88')) rawPhone = rawPhone.replace('+88', '');
+            if(rawPhone.startsWith('88')) rawPhone = rawPhone.substring(2);
+
+            if(!rawPhone || rawPhone.length < 10) {
+                showToast("অনুগ্রহ করে একটি সঠিক ১১ ডিজিটের মোবাইল নম্বর প্রদান করুন।", "error");
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "donors", rawPhone);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists() || docSnap.data().isVerified !== true) {
+                    showToast("দুঃখিত, এই নম্বরটি আমাদের সিস্টেমে কোনো ভেরিফাইড ডোনারের ডাটাফাইলের সাথে মিলছে না।", "error");
+                    return;
+                }
+
+                const btnSend = document.getElementById('btn-send-otp');
+                const btnText = document.getElementById('btn-send-otp-text');
+                btnSend.disabled = true;
+                btnText.innerText = "হোয়াটসঅ্যাপে কোড পাঠানো হচ্ছে...";
+
+                const generatedCode = String(Math.floor(100000 + Math.random() * 900000));
+                const targetApiUrl = `${WHATSAPP_API_BASE}/send-otp?phone=${encodeURIComponent(rawPhone)}&otp=${encodeURIComponent(generatedCode)}`;
+
+                console.log("হোয়াটসঅ্যাপে ওটিপি কোড পাঠানো হচ্ছে...", rawPhone);
+                
+                const response = await fetch(targetApiUrl, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                if (response.ok || response.status === 200) {
+                    otpSession.code = generatedCode;
+                    otpSession.phone = rawPhone;
+
+                    document.getElementById('display-target-phone').innerText = "+88 " + rawPhone;
+                    document.getElementById('auth-otp-request-card').classList.add('hidden');
+                    document.getElementById('auth-otp-verify-card').classList.remove('hidden');
+                    showToast("আপনার হোয়াটসঅ্যাপ নম্বরে সফলভাবে ওটিপি পাঠানো হয়েছে!", "success");
+                } else {
+                    throw new Error("এপিআই নেটওয়ার্ক রেসপন্স ব্যর্থ হয়েছে।");
+                }
+
+            } catch (err) {
+                console.error("হোয়াটসঅ্যাপ এপিআই ট্রানজিট ফেইলড:", err);
+                showToast("ওটিপি পাঠাতে ব্যর্থ হয়েছে। ফ্রি অনরেন্ডার এপিআই স্লিপ মোড থেকে সচল হতে ৩০ সেকেন্ড সময় লাগতে পারে, দয়া করে একটু পর আবার চেষ্টা করুন।", "error");
+            } finally {
+                const btnSend = document.getElementById('btn-send-otp');
+                const btnText = document.getElementById('btn-send-otp-text');
+                btnSend.disabled = false;
+                btnText.innerText = otpSession.mode === 'forgot' ? 'রিসেট কোড পাঠান' : 'হোয়াটসঅ্যাপে কোড পাঠান';
+            }
+        }
+
+        // ওটিপি যাচাইকরণ এবং নতুন পাসওয়ার্ড ডেটাবেজে সংরক্ষণ
+        async function verifyOtpAndSetPassword() {
+            const inputOtp = document.getElementById('verify-otp-code').value.trim();
+            const newPassword = document.getElementById('verify-new-password').value.trim();
+
+            if (!inputOtp || inputOtp !== otpSession.code) {
+                showToast("ভুল ওটিপি কোড! অনুগ্রহ করে আপনার হোয়াটসঅ্যাপ চেক করে সঠিক কোড দিন।", "error");
+                return;
+            }
+
+            if (!newPassword || newPassword.length < 6) {
+                showToast("নিরাপত্তার স্বার্থে পাসওয়ার্ডটি কমপক্ষে ৬ অক্ষরের হতে হবে।", "error");
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "donors", otpSession.phone);
+                
+                await updateDoc(docRef, {
+                    password: newPassword
+                });
+
+                showToast("আপনার পাসওয়ার্ডটি সফলভাবে ডাটাবেজে সেভ হয়েছে! অনুগ্রহ করে লগইন করুন।", "success");
+                
+                document.getElementById('verify-otp-code').value = "";
+                document.getElementById('verify-new-password').value = "";
+                cancelToLogin();
+
+            } catch (err) {
+                console.error("পাসওয়ার্ড রাইট প্রসেসে ফায়ারবেস ত্রুটি:", err);
+                showToast("পাসওয়ার্ড আপডেট করতে ব্যর্থ হয়েছে। ডাটাবেজ রুলস চেক করুন।", "error");
+            }
+        }
+
+        // ওয়ান-ক্লিক ক্লিপবোর্ড কপি টুল
+        function copyShareLink() {
+            const copyText = document.getElementById('share-link-input');
+            
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+
+            navigator.clipboard.writeText(copyText.value)
+                .then(() => {
+                    showToast("রেফারেল লিঙ্কটি সফলভাবে কপি হয়েছে!", "success");
+                })
+                .catch(err => {
+                    console.error("ক্লিপবোর্ড ইন্টারফেস ব্লকড:", err);
+                    showToast("অটোমেটিক কপি করা যায়নি। ইনপুট বক্স থেকে ম্যানুয়ালি কপি করে নিন।", "error");
+                });
+        }
+
+        // কাস্টম মোডাল ব্যবহার করে লগআউট প্রসেসর
+        async function handleLogout() {
+            const isConfirmed = await showCustomConfirm("আপনি কি নিশ্চিতভাবে আপনার ড্যাশবোর্ড থেকে লগআউট করতে চান?", "লগআউট নিশ্চিত করুন");
+            if (isConfirmed) {
+                localStorage.removeItem('active_donor_session');
+                checkActiveSession();
+                showToast("সফলভাবে লগআউট করা হয়েছে।", "success");
+                switchPage('leaderboard');
+            }
+        }
+    </script>
+</body>
+</html>
