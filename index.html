@@ -14,24 +14,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* মূল লাইট থিম ও ফন্ট কনফিগারেশন */
+        /* প্রফেশনাল লাইট থিম ও রিল্যাক্সিং কালার টোন */
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background-color: #f8fafc; /* অত্যন্ত আরামদায়ক ও অফ-হোয়াইট ব্যাকগ্রাউন্ড */
-            color: #1e293b; /* ডিপ স্লেট টেক্সট কালার */
+            background-color: #f8fafc; /* সফট ক্লিন ব্যাকগ্রাউন্ড */
+            color: #1e293b;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* প্রফেশনাল কার্ড ডিজাইন (সাদা থিম) */
+        /* কার্ডের প্রিমিয়াম শ্যাডো ও মিনিমাল বর্ডার ডিজাইন */
         .professional-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.12);
+            box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* প্রফেশনাল ইনপুট ডিজাইন */
+        /* ইনপুট ফিল্ডের মডার্ন ফোকাস ইফেক্ট */
         .professional-input {
             background: #fdfdfd;
             border: 1px solid #cbd5e1;
@@ -40,12 +40,12 @@
         }
         .professional-input:focus {
             background: #ffffff;
-            border-color: #dc2626; /* ব্লাড রেড কালার */
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
             outline: none;
         }
 
-        /* একটিভ নেভিগেশন স্টাইল */
+        /* একটিভ ট্যাব স্টাইল */
         .nav-active {
             background: #fef2f2;
             border: 1.5px solid #fee2e2;
@@ -53,19 +53,13 @@
             font-weight: 700;
         }
 
-        /* কাস্টম স্ক্রলবার */
-        ::-webkit-scrollbar {
-            width: 6px;
+        /* কাস্টম টোস্ট নোটিফিকেশন এনিমেশন */
+        @keyframes slide-in {
+            0% { transform: translateY(-1rem); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        .toast-animate {
+            animation: slide-in 0.3s ease-out forwards;
         }
     </style>
 </head>
@@ -74,14 +68,14 @@
     <!-- কাস্টম টোস্ট নোটিফিকেশন সিস্টেম -->
     <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
 
-    <!-- কাস্টম কনফার্মেশন মোডাল (ডিফল্ট উইন্ডো অ্যালার্ট এর পরিবর্তে) -->
+    <!-- কাস্টম কনফার্মেশন মোডাল -->
     <div id="custom-confirm-modal" class="fixed inset-0 bg-black/40 z-[9999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 scale-95 transition-transform duration-300">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 scale-95 transition-all">
             <h3 class="text-lg font-bold text-slate-800" id="confirm-title">নিশ্চিত করুন</h3>
             <p class="text-sm text-slate-500 mt-2" id="confirm-message">আপনি কি এই কাজটি করতে চান?</p>
             <div class="flex justify-end gap-3 mt-6">
-                <button id="confirm-cancel-btn" class="px-4 py-2 text-xs font-semibold text-slate-500 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">বাতিল</button>
-                <button id="confirm-ok-btn" class="px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors">হ্যাঁ, নিশ্চিত</button>
+                <button id="confirm-cancel-btn" class="px-4 py-2 text-xs font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 rounded-lg">বাতিল</button>
+                <button id="confirm-ok-btn" class="px-4 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-lg">হ্যাঁ, নিশ্চিত</button>
             </div>
         </div>
     </div>
@@ -100,13 +94,13 @@
         </div>
     </div>
 
-    <!-- মূল অ্যাপ্লিকেশন কন্টেইনার -->
+    <!-- মূল কন্টেইনার -->
     <div id="main-container" class="max-w-4xl mx-auto mb-24">
         
-        <!-- টপ হেডার সেকশন -->
-        <header class="text-center my-6 md:my-12">
+        <!-- টপ হেডার -->
+        <header class="text-center my-6 md:my-10">
             <div class="inline-block p-4 rounded-full bg-red-50 border border-red-100 mb-3">
-                <i class="fa-solid fa-droplet text-red-600 text-4xl md:text-5xl"></i>
+                <i class="fa-solid fa-droplet text-red-600 text-4xl md:text-5xl animate-bounce"></i>
             </div>
             <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900">
                 রক্তের টান <span class="text-red-600">পোর্টাল</span>
@@ -116,7 +110,7 @@
             </p>
         </header>
 
-        <!-- নেভিগেশন বার (সাদা প্রফেশনাল থিম) -->
+        <!-- নেভিগেশন বার -->
         <nav class="professional-card rounded-2xl p-1.5 flex justify-between gap-1 mb-8 sticky top-4 z-50">
             <button id="nav-leaderboard" onclick="switchPage('leaderboard')" class="flex-1 py-3 px-1 rounded-xl text-center font-bold text-xs sm:text-sm md:text-base transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 nav-active">
                 <i class="fa-solid fa-trophy text-amber-500"></i>
@@ -137,20 +131,19 @@
             
             <!-- ১. লিডারবোর্ড পেজ (সবার জন্য উন্মুক্ত) -->
             <section id="page-leaderboard" class="space-y-6">
-                
                 <!-- পোডিয়াম ভিউ (শীর্ষ ৩ জন ডোনারের জন্য বিশেষ গ্লোয়িং ডিসপ্লে) -->
                 <div id="leaderboard-podium" class="grid grid-cols-3 gap-2 sm:gap-6 items-end pt-8 pb-4">
-                    <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে ডাইনামিকালি পোডিয়াম তৈরি হবে -->
+                    <!-- জাভাস্ক্রিপ্ট দিয়ে পোডিয়াম ডাইনামিক্যালি রেন্ডার হবে -->
                 </div>
 
-                <!-- মূল লিডারবোর্ড তালিকা -->
+                <!-- মূল তালিকা -->
                 <div class="professional-card rounded-2xl p-4 md:p-8">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
                         <div>
                             <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 flex items-center gap-2">
                                 <i class="fa-solid fa-list-ol text-red-600"></i> ভেরিফাইড ডোনার তালিকা
                             </h2>
-                            <p class="text-xs text-slate-400 mt-1">সক্রিয়ভাবে রক্তদান ও প্ল্যাটফর্ম শেয়ার করা বীর যোদ্ধারা</p>
+                            <p class="text-xs text-slate-400 mt-1">রক্তদান ও রেফারেল নেটওয়ার্কের সক্রিয় যোদ্ধারা</p>
                         </div>
                         <span id="sorting-status" class="text-xs bg-slate-50 text-slate-600 py-1.5 px-3 rounded-full border border-slate-200 flex items-center gap-1.5">
                             <i class="fa-solid fa-spinner fa-spin mr-1"></i> লোড হচ্ছে...
@@ -172,7 +165,7 @@
                                 <tr>
                                     <td colspan="5" class="py-12 text-center text-slate-400">
                                         <i class="fa-solid fa-rotate text-red-600 animate-spin text-2xl mb-2 block"></i>
-                                        ডেটাবেজ থেকে লাইভ তথ্য নিয়ে আসা হচ্ছে...
+                                        ডেটাবেজ থেকে তথ্য আনা হচ্ছে...
                                     </td>
                                 </tr>
                             </tbody>
@@ -185,7 +178,7 @@
             <!-- ২. অথেন্টিকেশন পেজ (লগইন, ওটিপি সেন্ড, পাসওয়ার্ড সেট/রিসেট) -->
             <section id="page-auth" class="hidden max-w-md mx-auto">
                 
-                <!-- ধাপ ক: রেগুলার লগইন ফর্ম -->
+                <!-- ধাপ ক: লগইন ফর্ম -->
                 <div id="auth-login-card" class="professional-card rounded-3xl p-6 sm:p-8 space-y-6">
                     <div class="text-center">
                         <h2 class="text-2xl font-black text-slate-800">ডোনার লগইন</h2>
@@ -209,7 +202,7 @@
                             <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl professional-input text-sm sm:text-base">
                         </div>
 
-                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                        <button type="submit" id="btn-login-submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
                             <i class="fa-solid fa-right-to-bracket"></i>
                             <span>লগইন করুন</span>
                         </button>
@@ -236,7 +229,7 @@
                         <h2 id="otp-request-title" class="text-xl font-black text-slate-800">হোয়াটসঅ্যাপ ভেরিফিকেশন</h2>
                     </div>
                     <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        আপনার অ্যাকাউন্টের মালিকানা যাচাই করতে হোয়াটসঅ্যাপে ৬ সংখ্যার একটি ওটিপি (OTP) কোড পাঠানো হবে।
+                        আপনার অ্যাকাউন্টের মালিকানা যাচাই করতে হোয়াটসঅ্যাপে একটি ওটিপি (OTP) কোড পাঠানো হবে।
                     </p>
 
                     <div class="space-y-4">
@@ -258,12 +251,12 @@
                 <!-- ধাপ গ: ওটিপি ভেরিফাই ও নতুন পাসওয়ার্ড সেটআপ ফর্ম -->
                 <div id="auth-otp-verify-card" class="professional-card rounded-3xl p-6 sm:p-8 space-y-6 hidden">
                     <div class="text-center">
-                        <div class="inline-block p-3.5 rounded-full bg-emerald-50 border border-emerald-100 mb-3">
+                        <div class="inline-block p-3.5 rounded-full bg-emerald border border-emerald-100 mb-3">
                             <i class="fa-solid fa-shield-halved text-emerald-600 text-3xl"></i>
                         </div>
                         <h2 class="text-xl font-black text-slate-800">কোড যাচাই ও পাসওয়ার্ড সেট করুন</h2>
                         <p class="text-slate-500 text-xs mt-1.5">
-                            <span id="display-target-phone" class="text-emerald-600 font-bold"></span> নম্বরে পাঠানো ৬ সংখ্যার কোডটি দিন।
+                            <span id="display-target-phone" class="text-emerald-600 font-bold"></span> নম্বরে পাঠানো কোডটি দিন।
                         </p>
                     </div>
 
@@ -286,10 +279,9 @@
             </section>
 
 
-            <!-- ৩. শেয়ার ও পারসোনাল ড্যাশবোর্ড পেজ (শুধুমাত্র ভেরিফাইড লগইনড ডোনারদের জন্য) -->
+            <!-- ৩. শেয়ার ও পারসোনাল ড্যাশবোর্ড পেজ (ভেরিফাইড ও লগইনড ডোনারদের জন্য) -->
             <section id="page-share" class="hidden space-y-6">
-                
-                <!-- লগইন ছাড়া অ্যাক্সেস ব্লক করার কার্ড -->
+                <!-- রেগুলার অ্যাক্সেস ব্লক করার কার্ড -->
                 <div id="share-unauthorized" class="professional-card rounded-3xl p-8 text-center space-y-5 max-w-md mx-auto">
                     <div class="w-20 h-20 bg-red-50 border border-red-100 rounded-full flex items-center justify-center mx-auto text-red-600 text-3xl">
                         <i class="fa-solid fa-shield-cat"></i>
@@ -305,26 +297,38 @@
 
                 <!-- মূল ড্যাশবোর্ড ভিউ -->
                 <div id="share-dashboard" class="hidden space-y-6">
+                    
+                    <!-- ডোনার প্রোফাইল ওভারভিউ এবং স্ট্যাটাস উইজেট -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         
-                        <!-- ডোনার প্রোফাইল মিনি উইজেট -->
-                        <div class="professional-card rounded-2xl p-6 flex flex-col items-center justify-center text-center space-y-4 relative overflow-hidden border-t-4 border-t-red-600">
-                            <div class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                                <i class="fa-solid fa-certificate"></i> ভেরিফাইড
+                        <!-- প্রোফাইল কার্ড -->
+                        <div class="professional-card rounded-2xl p-6 flex flex-col items-center justify-center text-center space-y-4 relative border-t-4 border-t-red-600">
+                            <div class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+                                <i class="fa-solid fa-certificate mr-0.5"></i> ভেরিফাইড
                             </div>
-                            <div class="w-20 h-20 bg-gradient-to-tr from-red-600 to-rose-500 rounded-full flex items-center justify-center text-white text-3xl font-black shadow-md uppercase" id="donor-avatar">
-                                O
+                            
+                            <!-- আপলোডেড ফটো ফ্রেম বা ডিফল্ট এভাটার -->
+                            <div class="relative group">
+                                <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-red-500 shadow-md">
+                                    <img id="profile-avatar-img" src="https://img.icons8.com/color/150/user-male-circle--v1.png" class="w-full h-full object-cover" alt="Donor Profile Pic">
+                                </div>
+                                <label for="profile-photo-upload" class="absolute bottom-0 right-0 bg-red-600 hover:bg-red-700 text-white w-8 h-8 rounded-full flex items-center justify-center cursor-pointer border border-white shadow-md transition-transform active:scale-95" title="ছবি পরিবর্তন করুন (Max 100KB)">
+                                    <i class="fa-solid fa-camera text-xs"></i>
+                                </label>
+                                <input type="file" id="profile-photo-upload" accept="image/*" class="hidden" onchange="uploadProfilePhoto(event)">
                             </div>
+                            
                             <div>
                                 <h3 id="donor-profile-name" class="text-xl font-bold text-slate-800">লোডিং...</h3>
                                 <p id="donor-profile-phone" class="text-slate-500 text-xs font-mono mt-0.5"></p>
                             </div>
+                            
                             <div class="inline-flex items-center gap-1.5 bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-full border border-red-100">
-                                <i class="fa-solid fa-droplet"></i> গ্রুপ: <span id="donor-profile-blood">O+</span>
+                                <i class="fa-solid fa-droplet animate-pulse"></i> রক্তের গ্রুপ: <span id="donor-profile-blood">O+</span>
                             </div>
                         </div>
 
-                        <!-- রিয়েল-টাইম শেয়ার ও পয়েন্ট স্ট্যাটাস ট্র্যাকার -->
+                        <!-- স্ট্যাটাস উইজেটস -->
                         <div class="md:col-span-2 grid grid-cols-2 gap-4">
                             <div class="professional-card rounded-2xl p-6 flex flex-col justify-between">
                                 <div class="flex justify-between items-start">
@@ -344,47 +348,124 @@
                                 </div>
                                 <div class="mt-4">
                                     <h4 id="donor-stat-points" class="text-3xl sm:text-4xl font-black tracking-tight text-amber-600">০</h4>
-                                    <p class="text-slate-400 text-[10px] sm:text-xs mt-1">আপনার লিঙ্ক থেকে ওয়েবসাইটে আসা মানুষ</p>
+                                    <p class="text-slate-400 text-[10px] sm:text-xs mt-1">লিঙ্ক থেকে আসা ইউনিক ভিজিটর সংখ্যা</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- রেফ লিঙ্ক জেনারেটর কার্ড -->
-                    <div class="professional-card rounded-2xl p-6 space-y-4">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-bolt text-yellow-500"></i>
-                            <h3 class="text-lg font-bold text-slate-800">আপনার ইউনিক শেয়ার লিঙ্ক</h3>
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
-                            নিচের লিঙ্কটি কপি করে আপনার বন্ধুবান্ধব ও সামাজিক মাধ্যমে ছড়িয়ে দিন। আপনার রেফার করা লিঙ্ক দিয়ে যতজন মানুষ মূল সাইট ভিজিট করবে, আপনার পয়েন্ট স্বয়ংক্রিয়ভাবে বাড়তে থাকবে এবং আপনি লিডারবোর্ডের শীর্ষে উঠে যাবেন!
-                        </p>
+                    <!-- ডাবল ট্যাব সিস্টেম (শেয়ার লিঙ্ক এবং প্রফেশনাল আইডি কার্ড জেনারেটর) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        
+                        <!-- বাম পাশের অংশ: শেয়ার লিঙ্ক ও এডিট রিকোয়েস্ট (7 columns) -->
+                        <div class="lg:col-span-7 space-y-6">
+                            
+                            <!-- রেফারেল লিঙ্ক কার্ড -->
+                            <div class="professional-card rounded-2xl p-6 space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-link text-blue-500"></i>
+                                    <h3 class="text-lg font-bold text-slate-800">আপনার ইউনিক শেয়ার লিঙ্ক</h3>
+                                </div>
+                                <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+                                    লিঙ্কটি কপি করে সামাজিক মাধ্যমে শেয়ার করুন। আপনার রেফার করা লিঙ্ক দিয়ে যতজন মানুষ মূল সাইট ভিজিট করবে, আপনার পয়েন্ট স্বয়ংক্রিয়ভাবে বৃদ্ধি পাবে!
+                                </p>
 
-                        <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
-                            <input type="text" id="share-link-input" readonly class="flex-1 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 font-mono text-xs sm:text-sm focus:outline-none" value="">
-                            <button onclick="copyShareLink()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95 text-sm">
-                                <i class="fa-regular fa-copy"></i>
-                                <span>কপি লিঙ্ক</span>
-                            </button>
+                                <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                                    <input type="text" id="share-link-input" readonly class="flex-1 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 font-mono text-xs sm:text-sm focus:outline-none" value="">
+                                    <button onclick="copyShareLink()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm text-sm active:scale-95">
+                                        <i class="fa-regular fa-copy"></i>
+                                        <span>কপি করুন</span>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-wrap gap-2 pt-1">
+                                    <a id="share-whatsapp" target="_blank" class="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-600 text-xs font-semibold px-4 py-2 rounded-lg transition-all">
+                                        <i class="fa-brands fa-whatsapp"></i> হোয়াটসঅ্যাপ
+                                    </a>
+                                    <a id="share-facebook" target="_blank" class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 text-xs font-semibold px-4 py-2 rounded-lg transition-all">
+                                        <i class="fa-brands fa-facebook"></i> ফেসবুক
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- প্রোফাইল তথ্য এডিট ও এডমিন রিকোয়েস্ট ফর্ম -->
+                            <div class="professional-card rounded-2xl p-6 space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-user-pen text-slate-700"></i>
+                                    <h3 class="text-lg font-bold text-slate-800">প্রোফাইল তথ্য সংশোধন রিকোয়েস্ট</h3>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed">
+                                    রক্তদাতার নাম বা রক্তের গ্রুপ অত্যন্ত স্পর্শকাতর তথ্য হওয়ায় এটি সরাসরি ডাটাবেজে এডিট করা যাবে না। নিচে সংশোধিত তথ্য সাবমিট করলে তা সরাসরি আমাদের এডমিন প্যানেলের হোয়াটসঅ্যাপ নম্বরে রিকোয়েস্ট আকারে চলে যাবে।
+                                </p>
+
+                                <form id="form-edit-profile" onsubmit="sendEditRequestToAdmin(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                    <div>
+                                        <label class="block text-xs text-slate-600 mb-1 font-semibold">সংশোধিত নাম</label>
+                                        <input type="text" id="edit-name" required class="w-full px-3.5 py-2.5 rounded-lg professional-input text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-600 mb-1 font-semibold">রক্তের গ্রুপ</label>
+                                        <select id="edit-blood" required class="w-full px-3.5 py-2.5 rounded-lg professional-input text-sm">
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                        </select>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-xs text-slate-600 mb-1 font-semibold">অন্যান্য সংশোধন বা মেসেজ (ঐচ্ছিক)</label>
+                                        <textarea id="edit-notes" placeholder="যেমন: বয়স বা ঠিকানা পরিবর্তন করতে চাইলে এখানে লিখুন..." class="w-full px-3.5 py-2 rounded-lg professional-input text-sm h-20 resize-none"></textarea>
+                                    </div>
+                                    <button type="submit" class="sm:col-span-2 w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm">
+                                        <i class="fa-brands fa-whatsapp text-emerald-500 text-lg"></i>
+                                        <span>এডমিনের কাছে সংশোধন রিকোয়েস্ট পাঠান</span>
+                                    </button>
+                                </form>
+                            </div>
+
                         </div>
 
-                        <!-- ওয়ান-ক্লিক সোশ্যাল শেয়ার বাটনসমূহ -->
-                        <div class="flex flex-wrap gap-2 pt-3">
-                            <a id="share-whatsapp" target="_blank" class="flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100/50 border border-emerald-200 text-emerald-600 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
-                                <i class="fa-brands fa-whatsapp text-sm sm:text-base"></i> হোয়াটসঅ্যাপে শেয়ার করুন
-                            </a>
-                            <a id="share-facebook" target="_blank" class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100/50 border border-blue-200 text-blue-600 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
-                                <i class="fa-brands fa-facebook text-sm sm:text-base"></i> ফেসবুকে পোস্ট করুন
-                            </a>
+                        <!-- ডান পাশের অংশ: ডিজিটাল আইডি কার্ড রেন্ডারার ও ডাউনলোডার (5 columns) -->
+                        <div class="lg:col-span-5 space-y-6">
+                            
+                            <!-- আইডি কার্ড কার্ড -->
+                            <div class="professional-card rounded-2xl p-6 space-y-4 flex flex-col items-center">
+                                <div class="w-full flex items-center gap-2 mb-2">
+                                    <i class="fa-solid fa-address-card text-red-600"></i>
+                                    <h3 class="text-lg font-bold text-slate-800">ডিজিটাল রক্তদাতা আইডি কার্ড</h3>
+                                </div>
+                                
+                                <!-- লাইভ ইন্টারঅ্যাক্টিভ আইডি কার্ড প্রিভিউ এরিয়া -->
+                                <div id="card-svg-container" class="w-full overflow-hidden rounded-xl border border-slate-200 shadow-md aspect-[1.58/1]">
+                                    <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে চমৎকার SVG কার্ড ইনজেক্ট হবে -->
+                                </div>
+
+                                <div class="w-full pt-3 space-y-2">
+                                    <button onclick="downloadIdCardSVG()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-sm shadow-md">
+                                        <i class="fa-solid fa-download"></i>
+                                        <span>প্রফেশনাল কার্ড ডাউনলোড করুন (SVG)</span>
+                                    </button>
+                                    <p class="text-[10px] text-center text-slate-400">
+                                        কার্ডের ব্যাকগ্রাউন্ডে রক্তের টান-এর লোগো ওয়াটারমার্ক এবং তোমার ছবির হাই-রেজোলিউশন আউটপুট থাকবে।
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
+
                     </div>
 
                     <!-- লগআউট অপশন -->
-                    <div class="text-right">
-                        <button onclick="handleLogout()" class="text-slate-400 hover:text-red-600 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-red-50/50 border border-transparent hover:border-slate-200">
+                    <div class="text-right pt-4">
+                        <button onclick="handleLogout()" class="text-slate-400 hover:text-red-600 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-slate-100">
                             <i class="fa-solid fa-power-off"></i> ড্যাশবোর্ড থেকে লগআউট
                         </button>
                     </div>
+
                 </div>
             </section>
 
@@ -414,9 +495,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // হোয়াটসঅ্যাপ ওটিপি এপিআই কনফিগারেশন এবং প্রধান সাইটের লিঙ্ক
+        // হোয়াটসঅ্যাপ ওটিপি এপিআই কনফিগারেশন, এডমিন মোবাইল এবং প্রধান সাইটের লিঙ্ক
         const WHATSAPP_API_BASE = "https://otp-api-hmrz.onrender.com";
         const MAIN_WEBSITE_URL = "https://emergencyroktolagbe.vercel.app";
+        const ADMIN_WHATSAPP_PHONE = "+8801410603930";
         
         // গ্লোবাল ভ্যারিয়েবল এবং রানটাইম সেশন ম্যানেজমেন্ট স্টেট
         let currentDonor = null; 
@@ -438,6 +520,9 @@
         window.verifyOtpAndSetPassword = verifyOtpAndSetPassword;
         window.copyShareLink = copyShareLink;
         window.handleLogout = handleLogout;
+        window.uploadProfilePhoto = uploadProfilePhoto;
+        window.sendEditRequestToAdmin = sendEditRequestToAdmin;
+        window.downloadIdCardSVG = downloadIdCardSVG;
 
         // পেজ লোড হওয়ার সাথে সাথে প্রথমিক অপারেশনসমূহ রান করা হচ্ছে
         window.addEventListener('DOMContentLoaded', async () => {
@@ -460,7 +545,7 @@
             if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
             if (type === 'error') icon = '<i class="fa-solid fa-triangle-exclamation text-rose-500"></i>';
             
-            toast.className = "bg-white border border-slate-100 p-4 rounded-xl flex items-center gap-3 shadow-xl transition-all duration-300 transform translate-x-12 opacity-0 pointer-events-auto border-l-4 " + 
+            toast.className = "bg-white border border-slate-100 p-4 rounded-xl flex items-center gap-3 shadow-xl toast-animate pointer-events-auto border-l-4 " + 
                 (type === 'success' ? 'border-l-emerald-500' : type === 'error' ? 'border-l-rose-500' : 'border-l-blue-500');
             
             toast.innerHTML = `
@@ -470,14 +555,11 @@
             
             container.appendChild(toast);
             
-            // স্লাইড ইন এনিমেশন
-            setTimeout(() => {
-                toast.classList.remove('translate-x-12', 'opacity-0');
-            }, 10);
-            
             // ৪ সেকেন্ড পর অটো ডিলিট
             setTimeout(() => {
-                toast.classList.add('translate-x-12', 'opacity-0');
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-1rem)';
+                toast.style.transition = 'all 0.3s ease-out';
                 setTimeout(() => {
                     toast.remove();
                 }, 300);
@@ -714,6 +796,7 @@
                 dashboardCard.classList.remove('hidden');
 
                 try {
+                    // রিয়েল টাইমে ডাটাবেজ থেকে সর্বশেষ ডেটা সিঙ্ক করা
                     const freshDocRef = doc(db, "donors", currentDonor.id);
                     const freshDocSnap = await getDoc(freshDocRef);
                     if (freshDocSnap.exists()) {
@@ -722,15 +805,30 @@
                         localStorage.setItem('active_donor_session', JSON.stringify(currentDonor));
                     }
                 } catch (e) {
-                    console.error("রিয়েল-টাইম ডাটা আপডেট ফেইলড:", e);
+                    console.error("রিয়েল-টাইম ডাটা সিঙ্ক ব্যর্থ:", e);
                 }
 
+                // ইউজার ডেটা বাইন্ডিং
                 document.getElementById('donor-profile-name').innerText = currentDonor.name || 'ডোনার';
                 document.getElementById('donor-profile-phone').innerText = "+88 " + currentDonor.id;
                 document.getElementById('donor-profile-blood').innerText = currentDonor.bloodGroup || 'N/A';
-                document.getElementById('donor-avatar').innerText = currentDonor.name ? currentDonor.name.charAt(0) : 'O';
                 document.getElementById('donor-stat-shares').innerText = currentDonor.shares || 0;
                 document.getElementById('donor-stat-points').innerText = currentDonor.points || 0;
+
+                // এডিট ফর্ম ডেটা বাইন্ডিং
+                document.getElementById('edit-name').value = currentDonor.name || '';
+                document.getElementById('edit-blood').value = currentDonor.bloodGroup || 'O+';
+
+                // প্রোফাইল এভাটার সেটআপ
+                const avatarImg = document.getElementById('profile-avatar-img');
+                if (currentDonor.photo) {
+                    avatarImg.src = currentDonor.photo;
+                } else {
+                    avatarImg.src = "https://img.icons8.com/color/150/user-male-circle--v1.png";
+                }
+
+                // লাইভ প্রফেশনাল ডিজিটাল কার্ড রেন্ডার করা
+                renderVisitingCard();
 
                 // পোর্টাল ট্র্যাকার লিঙ্ক তৈরি
                 const referralUrl = `${window.location.origin}${window.location.pathname}?ref=${currentDonor.id}`;
@@ -742,45 +840,76 @@
             }
         }
 
-        // পাসওয়ার্ড লগইন প্রসেসর
+        // ৩-ফরম্যাট প্রোএকটিভ স্মার্ট ফোন ম্যাচিং লগইন ইঞ্জিন
         async function handleLogin(e) {
             e.preventDefault();
-            let rawPhone = document.getElementById('login-phone').value.trim();
+            let inputPhone = document.getElementById('login-phone').value.trim();
             const passwordInput = document.getElementById('login-password').value;
 
-            if(rawPhone.startsWith('+88')) rawPhone = rawPhone.replace('+88', '');
-            if(rawPhone.startsWith('88')) rawPhone = rawPhone.substring(2);
+            // দেশের কোড বা অগ্রবর্তী প্লাস ক্লিন করা
+            if(inputPhone.startsWith('+88')) inputPhone = inputPhone.replace('+88', '');
+            if(inputPhone.startsWith('88')) inputPhone = inputPhone.substring(2);
             
-            if(!rawPhone || !passwordInput) {
+            if(!inputPhone || !passwordInput) {
                 showToast("মোবাইল নম্বর এবং পাসওয়ার্ড সঠিক নিয়মে পূরণ করুন।", "error");
                 return;
             }
 
-            try {
-                const docRef = doc(db, "donors", rawPhone);
-                const docSnap = await getDoc(docRef);
+            const btnSubmit = document.getElementById('btn-login-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> যাচাই করা হচ্ছে...';
 
-                if (!docSnap.exists()) {
+            try {
+                // স্মার্ট ফোন ম্যাচার: ৩টি সম্ভাব্য ফরম্যাটেই চেক করবে
+                const phoneFormats = [
+                    inputPhone,                 // যেমন: 018XXXXXXXX
+                    "88" + inputPhone,           // যেমন: 88018XXXXXXXX
+                    "+88" + inputPhone           // যেমন: +88018XXXXXXXX
+                ];
+
+                let targetDocSnap = null;
+                let matchedId = null;
+
+                for (const format of phoneFormats) {
+                    const docRef = doc(db, "donors", format);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        targetDocSnap = docSnap;
+                        matchedId = format;
+                        break; // ডকুমেন্ট খুঁজে পাওয়া গেলে লুপ থেকে বের হয়ে যাবে
+                    }
+                }
+
+                if (!targetDocSnap) {
                     showToast("দুঃখিত, এই নম্বরটি আমাদের সিস্টেমে ডোনার হিসেবে নিবন্ধিত বা ভেরিফাইড নেই।", "error");
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>লগইন করুন</span>';
                     return;
                 }
 
-                const donorData = docSnap.data();
+                const donorData = targetDocSnap.data();
                 if (donorData.isVerified !== true) {
                     showToast("আপনার ডোনার প্রোফাইলটি এখনও ভেরিফাই করা হয়নি। রক্তদানের জন্য অ্যাডমিনের সাথে যোগাযোগ করুন।", "error");
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>লগইন করুন</span>';
                     return;
                 }
 
                 if (!donorData.password) {
                     showToast("আপনার অ্যাকাউন্টে এখনও পাসওয়ার্ড সেট করা হয়নি। নিচে 'প্রথমবার পাসওয়ার্ড সেট করুন' অপশনে যান।", "error");
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>লগইন করুন</span>';
                     return;
                 }
 
                 if (donorData.password === passwordInput) {
-                    const loggedDonor = { id: rawPhone, ...donorData };
+                    // লগইন সেশন সংরক্ষণ
+                    const loggedDonor = { id: matchedId, ...donorData };
                     localStorage.setItem('active_donor_session', JSON.stringify(loggedDonor));
                     
+                    // সেশন সক্রিয় হলে ডোনারের নিজস্ব শেয়ার ভ্যালু ১ বাড়ানো হবে
                     const currentShares = donorData.shares || 0;
+                    const docRef = doc(db, "donors", matchedId);
                     await updateDoc(docRef, { shares: currentShares + 1 });
                     loggedDonor.shares = currentShares + 1;
                     localStorage.setItem('active_donor_session', JSON.stringify(loggedDonor));
@@ -795,6 +924,9 @@
             } catch (err) {
                 console.error("লগইন প্রসেসে কারিগরি জটিলতা:", err);
                 showToast("সার্ভার বা ডেটাবেজে সংযোগ করা সম্ভব হচ্ছে না।", "error");
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>লগইন করুন</span>';
             }
         }
 
@@ -830,10 +962,22 @@
             }
 
             try {
-                const docRef = doc(db, "donors", rawPhone);
-                const docSnap = await getDoc(docRef);
+                // স্মার্ট ডক ম্যাচিং ওটিপি পাঠানোর পূর্বেও চেক করবে
+                const phoneFormats = [rawPhone, "88" + rawPhone, "+88" + rawPhone];
+                let targetDocSnap = null;
+                let matchedId = null;
 
-                if (!docSnap.exists() || docSnap.data().isVerified !== true) {
+                for (const format of phoneFormats) {
+                    const docRef = doc(db, "donors", format);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        targetDocSnap = docSnap;
+                        matchedId = format;
+                        break;
+                    }
+                }
+
+                if (!targetDocSnap || targetDocSnap.data().isVerified !== true) {
                     showToast("দুঃখিত, এই নম্বরটি আমাদের সিস্টেমে কোনো ভেরিফাইড ডোনারের ডাটাফাইলের সাথে মিলছে না।", "error");
                     return;
                 }
@@ -844,6 +988,7 @@
                 btnText.innerText = "হোয়াটসঅ্যাপে কোড পাঠানো হচ্ছে...";
 
                 const generatedCode = String(Math.floor(100000 + Math.random() * 900000));
+                // ওটিপি পাঠানোর জন্য হোয়াটসঅ্যাপে কোড ট্রিগার
                 const targetApiUrl = `${WHATSAPP_API_BASE}/send-otp?phone=${encodeURIComponent(rawPhone)}&otp=${encodeURIComponent(generatedCode)}`;
 
                 console.log("হোয়াটসঅ্যাপে ওটিপি কোড পাঠানো হচ্ছে...", rawPhone);
@@ -855,7 +1000,7 @@
 
                 if (response.ok || response.status === 200) {
                     otpSession.code = generatedCode;
-                    otpSession.phone = rawPhone;
+                    otpSession.phone = matchedId; // আমরা যে সঠিক ডক আইডি পেয়েছি তা সেভ রাখলাম
 
                     document.getElementById('display-target-phone').innerText = "+88 " + rawPhone;
                     document.getElementById('auth-otp-request-card').classList.add('hidden');
@@ -910,10 +1055,173 @@
             }
         }
 
+        // ১০০০ কেবি (100KB) লিমিটেড ফটো কনভার্টার ও আপলোডার
+        async function uploadProfilePhoto(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // ১০০ কেবি সাইজ ভ্যালিডেশন
+            const maxSize = 100 * 1024; // 100 KB in bytes
+            if (file.size > maxSize) {
+                showToast("ছবির সাইজ অতিরিক্ত বড় (১০০ কেবির বেশি) হওয়া যাবে না!", "error");
+                e.target.value = ''; // ক্লিয়ার সিলেকশন
+                return;
+            }
+
+            // ফটো রিডার (Base64 রূপান্তরকারী)
+            const reader = new FileReader();
+            reader.onload = async function (event) {
+                const base64String = event.target.result;
+
+                try {
+                    // ফায়ারস্টোরে ছবি সংরক্ষণ করা হচ্ছে
+                    const docRef = doc(db, "donors", currentDonor.id);
+                    await updateDoc(docRef, {
+                        photo: base64String
+                    });
+
+                    // লোকাল সেশনে ছবি সেভ এবং ড্যাশবোর্ড আপডেট
+                    currentDonor.photo = base64String;
+                    localStorage.setItem('active_donor_session', JSON.stringify(currentDonor));
+                    
+                    document.getElementById('profile-avatar-img').src = base64String;
+                    showToast("আপনার প্রোফাইল ছবি সফলভাবে আপলোড ও ডাটাবেজে সেভ হয়েছে!", "success");
+                    
+                    // লাইভ ডিজিটাল কার্ডে ছবি রি-রেন্ডার করা
+                    renderVisitingCard();
+
+                } catch (err) {
+                    console.error("ছবি আপলোড বা ডাটাবেজে রাইট করতে ত্রুটি:", err);
+                    showToast("ছবি ডাটাবেজে সংরক্ষণ করতে সমস্যা হয়েছে। ডাটাবেজ রুলস চেক করুন।", "error");
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // প্রফেশনাল ডিজিটাল ভিজিটিং কার্ড SVG আর্কিটেকচার রেন্ডারিং
+        function renderVisitingCard() {
+            const container = document.getElementById('card-svg-container');
+            const donorName = currentDonor.name || "লোডিং...";
+            const bloodGroup = currentDonor.bloodGroup || "O+";
+            const donorPhone = "+88 " + currentDonor.id;
+            const donorPhoto = currentDonor.photo || "https://img.icons8.com/color/150/user-male-circle--v1.png";
+            const domain = "emergencyroktolagbe.vercel.app";
+
+            // রিয়েল-টাইম রেসপন্সিভ প্রফেশনাল SVG কার্ড লেআউট
+            const svgMarkup = `
+            <svg id="digital-donor-id" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+                <!-- চমৎকার ক্লিন ব্যাকগ্রাউন্ড ও বর্ডার -->
+                <rect width="600" height="380" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="4"/>
+                
+                <!-- প্রফেশনাল রেড অ্যান্ড সিলভার কার্ভ ডিজাইন -->
+                <path d="M 0,0 L 220,0 C 180,80 100,100 0,120 Z" fill="#fee2e2" opacity="0.6"/>
+                <path d="M 0,0 L 150,0 C 120,50 60,60 0,80 Z" fill="#dc2626"/>
+                
+                <path d="M 600,380 L 450,380 C 480,320 540,310 600,290 Z" fill="#fee2e2"/>
+                <path d="M 600,380 L 480,380 C 500,340 550,330 600,320 Z" fill="#b91c1c"/>
+                
+                <!-- রক্তের ড্রপ ওয়াটারমার্ক (Subtle Blood Droplet Watermark in background) -->
+                <g transform="translate(420, 110) scale(2.2)" opacity="0.04" fill="#dc2626">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </g>
+                
+                <!-- ডোমেইন নেম ও প্ল্যাটফর্ম টাইটেল -->
+                <text x="30" y="38" fill="#ffffff" font-family="'Hind Siliguri', sans-serif" font-size="16" font-weight="bold">রক্তের টান</text>
+                <text x="570" y="40" text-anchor="end" fill="#dc2626" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="bold">${domain}</text>
+                
+                <!-- ছবি ফ্রেম (Circular Profile Picture Border) -->
+                <circle cx="120" cy="200" r="65" fill="#f1f5f9" stroke="#dc2626" stroke-width="4"/>
+                <defs>
+                    <clipPath id="donor-card-avatar">
+                        <circle cx="120" cy="200" r="61" />
+                    </clipPath>
+                </defs>
+                <!-- ডোনারের আসল ছবি ইনজেকশন -->
+                <image href="${donorPhoto}" x="59" y="139" height="122" width="122" clip-path="url(#donor-card-avatar)" preserveAspectRatio="xMidYMid slice"/>
+
+                <!-- ভেরিফাইড ব্যাজ (Verified Shield Badge) -->
+                <rect x="40" y="280" width="160" height="28" rx="14" fill="#10b981"/>
+                <text x="120" y="299" text-anchor="middle" fill="#ffffff" font-family="'Hind Siliguri', sans-serif" font-size="12" font-weight="bold">✓ ভেরিফাইড রক্তদাতা</text>
+                
+                <!-- ডোনারের বিস্তারিত প্রফেশনাল টেক্সট ডাটা -->
+                <text x="210" y="160" fill="#0f172a" font-family="'Hind Siliguri', sans-serif" font-size="24" font-weight="bold">${donorName}</text>
+                <text x="210" y="195" fill="#64748b" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="semibold">মোবাইল: ${donorPhone}</text>
+                <text x="210" y="225" fill="#64748b" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="semibold">স্ট্যাটাস: সক্রিয় ডোনার</text>
+                
+                <!-- রক্তের গ্রুপ বিশিষ্ট লাল রঙের চমৎকার ব্যাজ -->
+                <rect x="460" y="150" width="110" height="110" rx="55" fill="#fef2f2" stroke="#fecaca" stroke-width="2"/>
+                <text x="515" y="205" text-anchor="middle" fill="#dc2626" font-family="'Hind Siliguri', sans-serif" font-size="34" font-weight="900">${bloodGroup}</text>
+                <text x="515" y="235" text-anchor="middle" fill="#94a3b8" font-family="'Hind Siliguri', sans-serif" font-size="12" font-weight="bold">রক্তের গ্রুপ</text>
+                
+                <!-- ফুটনোট -->
+                <line x1="30" y1="335" x2="570" y2="335" stroke="#e2e8f0" stroke-width="1"/>
+                <text x="30" y="358" fill="#94a3b8" font-family="'Hind Siliguri', sans-serif" font-size="11">নিরাপদ রক্তদানে আমরা প্রতিশ্রুতিবদ্ধ। জরুরি প্রয়োজনে যোগাযোগ করুন।</text>
+            </svg>
+            `;
+            container.innerHTML = svgMarkup;
+        }
+
+        // SVG আইডি কার্ড ফাইল হিসেবে সরাসরি ডাউনলোড মেকানিজম
+        function downloadIdCardSVG() {
+            try {
+                const svgElement = document.getElementById('digital-donor-id');
+                if(!svgElement) return;
+
+                const serializer = new XMLSerializer();
+                let source = serializer.serializeToString(svgElement);
+
+                // এক্সটার্নাল সিএসএস বাইন্ডিং এবং এক্সপোর্ট প্রিপারেশন
+                if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+                    source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+                }
+                if(!source.match(/^<svg[^>]+xmlns\:xlink="http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+                    source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+                }
+
+                const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+                const downloadLink = document.createElement("a");
+                downloadLink.href = url;
+                downloadLink.download = `RokterTan_Card_${currentDonor.name || 'Donor'}.svg`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+
+                showToast("আইডি কার্ডটি ডাউনলোড হওয়া শুরু হয়েছে!", "success");
+            } catch (err) {
+                console.error("আইডি কার্ড ডাউনলোডে সমস্যা:", err);
+                showToast("কার্ডটি এক্সপোর্ট করতে কোনো ইন্টারনাল জটিলতা দেখা দিয়েছে।", "error");
+            }
+        }
+
+        // এডমিনের কাছে হোয়াটসঅ্যাপের মাধ্যমে এডিট রিকোয়েস্ট ডেসপ্যাচার
+        function sendEditRequestToAdmin(e) {
+            e.preventDefault();
+            const editedName = document.getElementById('edit-name').value.trim();
+            const editedBlood = document.getElementById('edit-blood').value;
+            const extraNotes = document.getElementById('edit-notes').value.trim() || 'কোনো মেসেজ নেই';
+
+            // প্রফেশনাল হোয়াটসঅ্যাপ মেসেজ ফরম্যাট কন্সট্রাক্ট করা
+            const waText = `আসসালামু আলাইকুম এডমিন,
+আমি "রক্তের টান" (emergencyroktolagbe.vercel.app) ওয়েবসাইটের একজন ভেরিফাইড রক্তদাতা। আমার প্রোফাইলের কিছু তথ্য সংশোধন করতে চাই।
+
+📌 বর্তমান ডোনার আইডি: +88 ${currentDonor.id}
+
+সংশোধিত তথ্যসমূহ:
+🔹 নতুন নাম: ${editedName}
+🔹 রক্তের গ্রুপ: ${editedBlood}
+🔹 অতিরিক্ত নোট: ${extraNotes}
+
+অনুগ্রহ করে তথ্যগুলো যাচাই করে আমার প্রোফাইল ডাটাবেজে আপডেট করে দিন। ধন্যবাদ!`;
+
+            // সরাসরি হোয়াটসঅ্যাপ অ্যাপ্লিকেশন বা ওয়েব লিঙ্কে রিডাইরেকশন
+            const waUrl = `https://api.whatsapp.com/send?phone=${encodeURIComponent(ADMIN_WHATSAPP_PHONE)}&text=${encodeURIComponent(waText)}`;
+            window.open(waUrl, '_blank');
+            showToast("আপনার সংশোধন রিকোয়েস্টটি হোয়াটসঅ্যাপে এডমিনের কাছে পাঠানো হয়েছে!", "success");
+        }
+
         // ওয়ান-ক্লিক ক্লিপবোর্ড কপি টুল
         function copyShareLink() {
             const copyText = document.getElementById('share-link-input');
-            
             copyText.select();
             copyText.setSelectionRange(0, 99999); 
 
