@@ -136,18 +136,36 @@
                     <!-- জাভাস্ক্রিপ্ট দিয়ে পোডিয়াম ডাইনামিক্যালি রেন্ডার হবে -->
                 </div>
 
-                <!-- মূল তালিকা -->
+                <!-- নতুন রক্তের গ্রুপভিত্তিক পরিসংখ্যান সেকশন -->
+                <div class="professional-card rounded-2xl p-4 md:p-6 bg-slate-50/50">
+                    <h3 class="text-md font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-red-500"></i> রক্তদাতা ডাটাবেজ পরিসংখ্যান (গ্রুপভিত্তিক)
+                    </h3>
+                    <div id="blood-groups-stat" class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+                        <!-- জাভাস্ক্রিপ্ট দ্বারা ডাইনামিক্যালি রেন্ডার হবে -->
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center animate-pulse">
+                            <span class="text-xs text-slate-400 font-bold">লোড হচ্ছে...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- মূল তালিকা (টপ ২০) -->
                 <div class="professional-card rounded-2xl p-4 md:p-8">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
                         <div>
                             <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-list-ol text-red-600"></i> ভেরিফাইড ডোনার তালিকা
+                                <i class="fa-solid fa-list-ol text-red-600"></i> ভেরিফাইড ডোনার তালিকা (শীর্ষ ২০)
                             </h2>
                             <p class="text-xs text-slate-400 mt-1">রক্তদান ও রেফারেল নেটওয়ার্কের সক্রিয় যোদ্ধারা</p>
                         </div>
-                        <span id="sorting-status" class="text-xs bg-slate-50 text-slate-600 py-1.5 px-3 rounded-full border border-slate-200 flex items-center gap-1.5">
-                            <i class="fa-solid fa-spinner fa-spin mr-1"></i> লোড হচ্ছে...
-                        </span>
+                        <div class="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+                            <span id="sorting-status" class="text-xs bg-slate-50 text-slate-600 py-1.5 px-3 rounded-full border border-slate-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-spinner fa-spin mr-1"></i> লোড হচ্ছে...
+                            </span>
+                            <span id="download-count-badge" class="text-xs bg-red-50 text-red-600 py-1.5 px-3 rounded-full border border-red-100 flex items-center gap-1.5 font-bold">
+                                <i class="fa-solid fa-address-card"></i> মোট কার্ড ডাউনলোড: <span id="total-downloads-count">০</span> বার
+                            </span>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -170,6 +188,53 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- এক্সাম্পল ডেমো কার্ড সেকশন (যাদের একাউন্ট নেই তাদের দেখার সুবিধার্থে) -->
+                <div class="professional-card rounded-2xl p-6 text-center space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-id-badge text-emerald-500"></i> রক্তদাতার ডিজিটাল আইডি কার্ডের নমুনা
+                    </h3>
+                    <p class="text-xs text-slate-500 max-w-md mx-auto">
+                        আমাদের সাথে যুক্ত হয়ে আপনিও আপনার অ্যাকাউন্টে লগইন করে নিচের মতো চমৎকার ভেরিফাইড রক্তের টান ডিজিটাল আইডি কার্ড লাইভ জেনারেট ও ডাউনলোড করতে পারবেন।
+                    </p>
+                    <div class="max-w-md mx-auto overflow-hidden rounded-xl border border-slate-200 shadow-md aspect-[1.58/1]">
+                        <!-- স্ট্যাটিক প্রিভিউ ডেমো আইডি কার্ড -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+                            <rect width="600" height="380" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="4"/>
+                            <path d="M 0,0 L 220,0 C 180,80 100,100 0,120 Z" fill="#fee2e2" opacity="0.6"/>
+                            <path d="M 0,0 L 150,0 C 120,50 60,60 0,80 Z" fill="#dc2626"/>
+                            <path d="M 600,380 L 450,380 C 480,320 540,310 600,290 Z" fill="#fee2e2"/>
+                            <path d="M 600,380 L 480,380 C 500,340 550,330 600,320 Z" fill="#b91c1c"/>
+                            <g transform="translate(420, 110) scale(2.2)" opacity="0.04" fill="#dc2626">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </g>
+                            <text x="30" y="38" fill="#ffffff" font-family="'Hind Siliguri', sans-serif" font-size="16" font-weight="bold">রক্তের টান</text>
+                            <text x="570" y="40" text-anchor="end" fill="#dc2626" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="bold">emergencyroktolagbe.vercel.app</text>
+                            
+                            <circle cx="120" cy="200" r="65" fill="#f1f5f9" stroke="#dc2626" stroke-width="4"/>
+                            <defs>
+                                <clipPath id="demo-avatar">
+                                    <circle cx="120" cy="200" r="61" />
+                                </clipPath>
+                            </defs>
+                            <image href="https://img.icons8.com/color/150/user-male-circle--v1.png" x="59" y="139" height="122" width="122" clip-path="url(#demo-avatar)" preserveAspectRatio="xMidYMid slice"/>
+
+                            <rect x="40" y="280" width="160" height="28" rx="14" fill="#10b981"/>
+                            <text x="120" y="299" text-anchor="middle" fill="#ffffff" font-family="'Hind Siliguri', sans-serif" font-size="12" font-weight="bold">✓ ভেরিফাইড রক্তদাতা</text>
+                            
+                            <text x="210" y="160" fill="#0f172a" font-family="'Hind Siliguri', sans-serif" font-size="24" font-weight="bold">আসিফ রহমান (নমুনা)</text>
+                            <text x="210" y="195" fill="#64748b" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="semibold">মোবাইল: +88 017XXXXXXXX</text>
+                            <text x="210" y="225" fill="#64748b" font-family="'Hind Siliguri', sans-serif" font-size="14" font-weight="semibold">স্ট্যাটাস: সক্রিয় ডোনার</text>
+                            
+                            <rect x="460" y="150" width="110" height="110" rx="55" fill="#fef2f2" stroke="#fecaca" stroke-width="2"/>
+                            <text x="515" y="205" text-anchor="middle" fill="#dc2626" font-family="'Hind Siliguri', sans-serif" font-size="34" font-weight="900">O+</text>
+                            <text x="515" y="235" text-anchor="middle" fill="#94a3b8" font-family="'Hind Siliguri', sans-serif" font-size="12" font-weight="bold">রক্তের গ্রুপ</text>
+                            
+                            <line x1="30" y1="335" x2="570" y2="335" stroke="#e2e8f0" stroke-width="1"/>
+                            <text x="30" y="358" fill="#94a3b8" font-family="'Hind Siliguri', sans-serif" font-size="11">নিরাপদ রক্তদানে আমরা প্রতিশ্রুতিবদ্ধ। জরুরি প্রয়োজনে যোগাযোগ করুন।</text>
+                        </svg>
                     </div>
                 </div>
             </section>
@@ -354,7 +419,7 @@
                         </div>
                     </div>
 
-                    <!-- ডাবল ট্যাব সিস্টেম (শেয়ার লিঙ্ক এবং প্রফেশনাল আইডি কার্ড জেনারেটর) -->
+                    <!-- ডাবল ট্যাব সিস্টেম (শেয়ার লিঙ্ক এবং প্রফেশনাল আইডিカード জেনারেটর) -->
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         
                         <!-- বাম পাশের অংশ: শেয়ার লিঙ্ক ও এডিট রিকোয়েস্ট (7 columns) -->
@@ -477,7 +542,7 @@
         // ফায়ারবেস মডিউলার এসডিকে সরাসরি সিডিএন থেকে ইম্পোর্ট করা হচ্ছে
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
-            getFirestore, doc, collection, getDocs, getDoc, updateDoc, query, where, runTransaction 
+            getFirestore, doc, collection, getDocs, getDoc, updateDoc, query, where, runTransaction, setDoc 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // ওমর, তোমার সরবরাহকৃত ফায়ারবেস কনফিগারেশন প্যারামিটারসমূহ
@@ -534,6 +599,9 @@
 
             // ৩. প্রথমিক ডাটা দিয়ে লিডারবোর্ড সাজানো
             await loadLeaderboard();
+
+            // ৪. রিয়েল টাইম বা স্টোরেজ থেকে কার্ড ডাউনলোড পরিসংখ্যান আনা
+            await loadDownloadStats();
         });
 
         // কাস্টম নোটিফিকেশন সিস্টেম (টোস্ট অ্যালার্ট)
@@ -624,6 +692,10 @@
                         
                         // লোকাল স্টোরেজে লক করা যাতে বারবার রিফ্রেশে পয়েন্ট না বাড়ে
                         localStorage.setItem(`visited_ref_${refId}`, "true");
+                        
+                        // লোকাল ক্যাশ ইনভ্যালিডেট করা যাতে পয়েন্ট আপডেট সাথে সাথে দেখায়
+                        localStorage.removeItem('donors_cache_data');
+                        localStorage.removeItem('donors_cache_time');
                     } catch (e) {
                         console.error("রেফারেল ট্র্যাকিংয়ে সমস্যা হয়েছে:", e);
                     }
@@ -672,20 +744,93 @@
             }
         }
 
-        // ডাইনামিক রিয়েল-টাইম লিডারবোর্ড রেন্ডার ইঞ্জিন (হোয়াইট প্রফেশনাল থিম)
+        // রক্তের গ্রুপভিত্তিক রিয়েল-টাইম কাউন্টিং ডিস্ট্রিবিউশন
+        function renderBloodStats(donors) {
+            const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+            const counts = {};
+            bloodGroups.forEach(g => counts[g] = 0);
+
+            donors.forEach(donor => {
+                const group = (donor.bloodGroup || '').toUpperCase().trim();
+                if (bloodGroups.includes(group)) {
+                    counts[group]++;
+                }
+            });
+
+            const statContainer = document.getElementById('blood-groups-stat');
+            statContainer.innerHTML = "";
+
+            bloodGroups.forEach(group => {
+                statContainer.innerHTML += `
+                    <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-center flex flex-col justify-center">
+                        <span class="text-xs text-slate-400 font-bold">গ্রুপ ${group}</span>
+                        <span class="text-lg font-black text-red-600 mt-0.5">${counts[group]}</span>
+                    </div>
+                `;
+            });
+        }
+
+        // কার্ড ডাউনলোড পরিসংখ্যান লোড করা
+        async function loadDownloadStats() {
+            try {
+                // ডাউনলোড ট্র্যাক ক্যাশিং ১৫ মিনিটের জন্য
+                const cacheStats = localStorage.getItem('total_downloads_cache');
+                const cacheStatsTime = localStorage.getItem('total_downloads_cache_time');
+                const now = Date.now();
+
+                if (cacheStats && cacheStatsTime && (now - parseInt(cacheStatsTime) < 15 * 60 * 1000)) {
+                    document.getElementById('total-downloads-count').innerText = cacheStats;
+                    return;
+                }
+
+                const statsRef = doc(db, "system_stats", "downloads");
+                const statsSnap = await getDoc(statsRef);
+                let totalDownloads = 0;
+                if (statsSnap.exists()) {
+                    totalDownloads = statsSnap.data().count || 0;
+                } else {
+                    // কোনো ডকুমেন্ট না থাকলে ডিফোল্ট ০ তৈরি করবে
+                    await setDoc(statsRef, { count: 0 });
+                }
+                document.getElementById('total-downloads-count').innerText = totalDownloads;
+                
+                localStorage.setItem('total_downloads_cache', totalDownloads);
+                localStorage.setItem('total_downloads_cache_time', now.toString());
+            } catch (err) {
+                console.error("পরিসংখ্যান ডাউনলোডে সমস্যা:", err);
+            }
+        }
+
+        // ডাইনামিক রিয়েল-টাইম লিডারবোর্ড রেন্ডার ইঞ্জিন ও টপ ২০ সর্টার (ক্যাশিং সাপোর্টেড)
         async function loadLeaderboard() {
             const containerRows = document.getElementById('leaderboard-rows');
             const podiumGrid = document.getElementById('leaderboard-podium');
             
             try {
-                const donorsCol = collection(db, "donors");
-                const q = query(donorsCol, where("isVerified", "==", true));
-                const snapshot = await getDocs(q);
-                
                 let donors = [];
-                snapshot.forEach(doc => {
-                    donors.push({ id: doc.id, ...doc.data() });
-                });
+                const now = Date.now();
+                const cacheData = localStorage.getItem('donors_cache_data');
+                const cacheTime = localStorage.getItem('donors_cache_time');
+
+                // ১৫ মিনিট লোকাল ক্যাশ মেকানিজম (রিড অ্যান্ড রাইট লিমিটেশন রোধ করার জন্য)
+                if (cacheData && cacheTime && (now - parseInt(cacheTime) < 15 * 60 * 1000)) {
+                    donors = JSON.parse(cacheData);
+                } else {
+                    const donorsCol = collection(db, "donors");
+                    const q = query(donorsCol, where("isVerified", "==", true));
+                    const snapshot = await getDocs(q);
+                    
+                    snapshot.forEach(doc => {
+                        donors.push({ id: doc.id, ...doc.data() });
+                    });
+
+                    // লোকাল ক্যাশে নতুন ডেটা সেট
+                    localStorage.setItem('donors_cache_data', JSON.stringify(donors));
+                    localStorage.setItem('donors_cache_time', now.toString());
+                }
+
+                // রক্তের গ্রুপভিত্তিক ডাটা রেন্ডার করা
+                renderBloodStats(donors);
 
                 systemActive = donors.some(d => (d.points && d.points > 0) || (d.shares && d.shares > 0));
                 
@@ -699,6 +844,7 @@
 
                 globalDonorsList = donors;
 
+                // পডিয়াম ভিউয়ের জন্য ডাইনামিক্যালি সেরা ৩ জন রেন্ডার করুন
                 podiumGrid.innerHTML = "";
                 let podiumData = { first: null, second: null, third: null };
                 
@@ -751,7 +897,10 @@
                     return;
                 }
 
-                donors.forEach((donor, index) => {
+                // এখানে শুধুমাত্র শীর্ষ ২০ জনের নাম রাখা হচ্ছে (টপ ২০ ডোনার)
+                const top20Donors = donors.slice(0, 20);
+
+                top20Donors.forEach((donor, index) => {
                     let positionBadge = "";
                     if (index === 0) positionBadge = `<span class="bg-amber-100 text-amber-700 py-1 px-2.5 rounded-lg text-xs font-bold border border-amber-200">১</span>`;
                     else if (index === 1) positionBadge = `<span class="bg-slate-100 text-slate-600 py-1 px-2.5 rounded-lg text-xs font-bold border border-slate-200">২</span>`;
@@ -914,6 +1063,10 @@
                     loggedDonor.shares = currentShares + 1;
                     localStorage.setItem('active_donor_session', JSON.stringify(loggedDonor));
 
+                    // ক্যাশ ফাইল ডিলিট করে দিন রিফ্রেশড ডেটার জন্য
+                    localStorage.removeItem('donors_cache_data');
+                    localStorage.removeItem('donors_cache_time');
+
                     checkActiveSession();
                     showToast("সাফল্যের সাথে লগইন সম্পন্ন হয়েছে!", "success");
                     switchPage('share');
@@ -1047,6 +1200,11 @@
                 
                 document.getElementById('verify-otp-code').value = "";
                 document.getElementById('verify-new-password').value = "";
+                
+                // ক্যাশ ক্লিয়ার করুন নতুন স্টেট অনুযায়ী
+                localStorage.removeItem('donors_cache_data');
+                localStorage.removeItem('donors_cache_time');
+
                 cancelToLogin();
 
             } catch (err) {
@@ -1087,6 +1245,10 @@
                     document.getElementById('profile-avatar-img').src = base64String;
                     showToast("আপনার প্রোফাইল ছবি সফলভাবে আপলোড ও ডাটাবেজে সেভ হয়েছে!", "success");
                     
+                    // ক্যাশ ক্লিয়ার করুন রি-রেন্ডারিংয়ের জন্য
+                    localStorage.removeItem('donors_cache_data');
+                    localStorage.removeItem('donors_cache_time');
+
                     // লাইভ ডিজিটাল কার্ডে ছবি রি-রেন্ডার করা
                     renderVisitingCard();
 
@@ -1161,8 +1323,8 @@
             container.innerHTML = svgMarkup;
         }
 
-        // SVG আইডি কার্ড ফাইল হিসেবে সরাসরি ডাউনলোড মেকানিজম
-        function downloadIdCardSVG() {
+        // SVG আইডি কার্ড ফাইল হিসেবে সরাসরি ডাউনলোড মেকানিজম এবং ডাউনলোডার ট্র্যাকিং
+        async function downloadIdCardSVG() {
             try {
                 const svgElement = document.getElementById('digital-donor-id');
                 if(!svgElement) return;
@@ -1187,6 +1349,24 @@
                 document.body.removeChild(downloadLink);
 
                 showToast("আইডি কার্ডটি ডাউনলোড হওয়া শুরু হয়েছে!", "success");
+
+                // ডাউনলোড পরিসংখ্যান ডেটাবেজে রিয়েল-টাইম ট্র্যানজ্যাকশন দ্বারা ১ বাড়ানো হচ্ছে
+                const statsRef = doc(db, "system_stats", "downloads");
+                await runTransaction(db, async (transaction) => {
+                    const statsDoc = await transaction.get(statsRef);
+                    if (statsDoc.exists()) {
+                        const currentCount = statsDoc.data().count || 0;
+                        transaction.update(statsRef, { count: currentCount + 1 });
+                    } else {
+                        transaction.set(statsRef, { count: 1 });
+                    }
+                });
+
+                // নতুন ডাটা ক্যাশে ইনভ্যালিডেট করে লোড করা
+                localStorage.removeItem('total_downloads_cache');
+                localStorage.removeItem('total_downloads_cache_time');
+                await loadDownloadStats();
+
             } catch (err) {
                 console.error("আইডি কার্ড ডাউনলোডে সমস্যা:", err);
                 showToast("কার্ডটি এক্সপোর্ট করতে কোনো ইন্টারনাল জটিলতা দেখা দিয়েছে।", "error");
